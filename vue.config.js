@@ -16,7 +16,8 @@ module.exports = {
         resolve: {
             alias: {
                 '@': resolve('examples'),
-                '#': resolve('packages')
+                '#': resolve('packages'),
+                '#c': resolve('packages/components')
             }
         }
     },

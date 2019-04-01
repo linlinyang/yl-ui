@@ -22,16 +22,16 @@
 
 <script>
 // # is an alias to /packages
-import Icon from '#/Icon/';
-import YMenu from '#/YMenu/';
-import MenuItem from '#/YMenu/MenuItem';
+import Icon from '#c/Icon/';
+import YMenu from '#c/YMenu/';
+import MenuItem from '#c/YMenu/MenuItem';
 
 export default {
   name: 'home',
   components: {
     Icon,
-	YMenu,
-	MenuItem
+    YMenu,
+    MenuItem
   },
   data(){
 	  return {
