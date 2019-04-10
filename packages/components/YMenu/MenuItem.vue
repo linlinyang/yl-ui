@@ -1,7 +1,11 @@
 <template>
 <div class="wrapper">
-    <a class="menu-item" v-if='linkUrl != ""'>
-        <span>{{ title }}</span>
+    <a 
+        class="menu-item" 
+        v-if='linkUrl != ""'
+        :href="linkUrl"
+    >
+        <slot></slot>
         <Icon :type='icon' :size='size'></Icon>
     </a>
 </div>
@@ -16,21 +20,17 @@ export default {
         Icon
     },
     props: {
-        title: {
-            type: String,
-            required: true
-        },
         icon: {
             type: String,
             default: 'next'
         },
         size: {
             type: String,
-            default: '18px'
+            default: '18'
         },
         linkUrl: {
             type: String,
-            default: '#'
+            required: true
         }
     }
 }
@@ -48,6 +48,8 @@ export default {
             border-bottom: 1px solid #e5e5e5;
             padding: 15px 0;
             width: 100%;
+            color: #333;
+            text-decoration: none;
         }
 
         &:last-child{

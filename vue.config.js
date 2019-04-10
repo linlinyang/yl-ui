@@ -4,7 +4,6 @@ const resolve = filename => {
 };
 
 module.exports = {
-
     pages: {
         index: {
             entry: resolve('examples/main.js'),
@@ -12,6 +11,7 @@ module.exports = {
             filename: 'index.html'
         }
     },
+
     configureWebpack: {
         resolve: {
             alias: {
@@ -21,27 +21,20 @@ module.exports = {
             }
         }
     },
+
     chainWebpack: config => {
         config.resolveLoader
             .modules
             .add('packages')
             .add(resolve('packages'))
+    },
+
+    pluginOptions: {
+        'style-resources-loader': {
+            preProcessor: 'scss',
+            patterns: [
+                resolve('packages/assets/variable.scss')
+            ]
+        }
     }
-    /* chainWebpack: config => {
-        config.module
-            .rule('packages')
-                .test(/\.js$/)
-                .include
-                    .add(/packages/)
-                    .end()
-                .use('babel')
-                    .loader('babel-loader')
-                    .options({
-                        presets: [
-                            ['@babel/preset-env', { modules: false }]
-                        ]
-                    })
-
-    } */
-
 };

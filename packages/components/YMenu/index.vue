@@ -1,12 +1,12 @@
 <template>
 <div class="menu" :class="expandCls">
 
-    <div class="menu-header" :class='headCls' @click='handleExpand'>
+    <div class="menu-header" :class='headCls' v-vue-tap='handleExpand'>
         <span>{{ title }}</span>
         <Icon v-if='(icon || customIcon)' :type='icon' :custom='customIcon' size='30'></Icon>
     </div>
 
-    <collapse-transition>
+    <collapse-transition >
         <div class="menu-body" v-show='isExpand'>
             <slot name="items"></slot>
         </div>
@@ -53,7 +53,8 @@ export default {
     computed: {
         headCls(){
             return {
-                [`${this.custom}`]: this.custom != ''
+                [`${this.custom}`]: this.custom != '',
+                'expanded': !!this.isExpand
             };
         },
         expandCls(){
@@ -84,6 +85,10 @@ export default {
             padding: 15px 20px;
             cursor: pointer;
             font-size: 16px;
+
+            &.expanded{
+                color: #888;
+            }
         }
         
     }

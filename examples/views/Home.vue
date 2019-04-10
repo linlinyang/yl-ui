@@ -1,20 +1,29 @@
 <template>
-  <div class="home">
-
-    <div class="page-header">
-		<div class="page-title">
+<div class="home">
+	
+	<Header>
+		<template #title>
 			<img src="@/assets/logo.png">
-		</div>
-		<div class="page-body">
+		</template>
+		<template #body>
 			<p>WeUI 是一套同微信原生视觉体验一致的基础样式库，由微信官方设计团队为微信内网页和微信小程序量身设计，令用户的使用感知更加统一。</p>
-		</div>
-    </div>
+		</template>
+	</Header>
+
     <div class="list">
-      <YMenu icon='category' title='表单' custom='aa'>
+		<YMenu icon='category' title='表单'>
 			<template #items>
-				<MenuItem v-for="(row,index) in list" :key='index' :title="row.name"></MenuItem>
+				<menu-item 
+					v-for="(row,index) in list" 
+					:key='index'
+					:linkUrl='row.link'
+				>
+					<template>
+						<span>{{ row.name }}</span>
+					</template>
+				</menu-item>
 			</template>
-      </YMenu>
+		</YMenu>
     </div>
     
   </div>
@@ -22,84 +31,43 @@
 
 <script>
 // # is an alias to /packages
+// #c is an alias to /packages/components
+import Header from '@/components/Header/';
 import Icon from '#c/Icon/';
 import YMenu from '#c/YMenu/';
 import MenuItem from '#c/YMenu/MenuItem';
 
 export default {
-  name: 'home',
-  components: {
-    Icon,
-    YMenu,
-    MenuItem
-  },
-  data(){
-	  return {
-		  list: [{
-			  name: 'Button',
-			  link: '/button',
-			  target: '_blank'
-		  },{
-			  name: 'Input',
-			  link: '/input',
-			  target: '_blank'
-		  },{
-			  name: 'List',
-			  link: '/list'
-		  }]
-	  };
-  }
+	name: 'home',
+	components: {
+		Header,
+		Icon,
+		YMenu,
+		MenuItem
+	},
+	data(){
+		return {
+			list: [{
+				name: 'Button',
+				link: '#/button',
+				target: '_blank'
+			},{
+				name: 'Input',
+				link: '/input',
+				target: '_blank'
+			},{
+				name: 'List',
+				link: '/list'
+			}]
+		};
+  	}
 }
 </script>
 
-<style lang="scss">
-  
-  @mixin fcw(
-    $size: null,
-    $color: null,
-    $weight: null
-  ){
-    @if($size){
-      font-size: $size;
-    }
-    @if($color){
-      color: $color
-    }
-    @if($weight){
-      font-weight: $weight;
-    }
-  }
+<style lang="scss" scoped>
 
-  @mixin size(
-    $width: null,
-    $height: null
-  ){
-    @if($width){
-      width: $width;
-    }
-    @if($height){
-      height: $height;
-    }
-  }
-
-  .page-header{
-    padding: 40px;
-    .page-title{
-      img{
-        height: 21px;
-      }
-      margin-bottom: 15px;
-    }
-    .page-body{
-      margin-top: 5px;
-      @include fcw(14px,#888);
-      line-height: 24px;
-    }
-  }
-
-  .list{
-	padding: 0 15px;
-	
-  }
+  	.list{
+		padding: 0 15px;
+  	}
 
 </style>

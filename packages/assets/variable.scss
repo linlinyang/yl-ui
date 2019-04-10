@@ -1,0 +1,31 @@
+@mixin fcw(
+    $size: null,
+    $color: null,
+    $weight: null
+) {
+    @if $size {
+        font-size: $size;
+    }
+    @if $color {
+        color: $color;
+    }
+    @if $weight {
+        font-weight: $weight;
+    }
+}
+
+@mixin size(
+    $width: null,
+    $height: null,
+    $lineHeight: null
+) {
+    @if $width {
+        width: $width;
+    }
+    @if $height {
+        height: $height;
+    }
+    @if $lineHeight {
+        line-height: $lineHeight;
+    }
+}
