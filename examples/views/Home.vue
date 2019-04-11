@@ -25,7 +25,6 @@
 			</template>
 		</YMenu>
     </div>
-    
   </div>
 </template>
 
