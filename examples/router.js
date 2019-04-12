@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
-import Button from './views/Button.vue'
+import ButtonPanel from './views/ButtonPanel.vue'
 
 
 Vue.use(Router)
@@ -11,8 +11,8 @@ export default new Router({
 		name: 'home',
 		component: Home
     },{
-		path: '/button',
-		name: 'button',
-		component: Button
+		path: '/buttons',
+		name: 'ButtonPanel',
+		component: ButtonPanel
 	}]
 })

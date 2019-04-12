@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import vueTap from 'vue-tap-directive';
+import '../packages/styles/index.scss'
 
 Vue.config.productionTip = false
 

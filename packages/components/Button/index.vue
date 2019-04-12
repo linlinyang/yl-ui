@@ -1,6 +1,14 @@
 <template>
-<div class="btn">
-    <Icon class="loading" ></Icon>
+<div 
+    :class="classes"
+    v-vue-tap='clickHandler'
+    :disabled='disabled'
+>
+    <Icon 
+        class="load-loop" 
+        type='loading'
+        v-if='loading'
+    ></Icon>
     <Icon 
         :type='icon'
         :custom='customIcon'
@@ -13,13 +21,11 @@
 <script>
 import Iocn from '#c/Icon/';
 
+const prefixCls = 'yl-ui-button';
+
 export default {
     name: 'Button',
     props: {
-        loading: {
-            type: Boolean,
-            default: false
-        },
         icon: {
             type: String,
             default: ''
@@ -28,18 +34,58 @@ export default {
             type: String,
             default: ''
         },
+        type: {
+            validator(val){
+                return ['default','primary', 'info', 'success', 'warning','danger'].includes(val);
+            },
+            default: 'default'
+        },
+        size: {
+            validator(val){
+                return ['small','large','default'].includes(val);
+            }
+        },
+        custom: {
+            type: String,
+            default: ''
+        },
+        round: Boolean,
         loading: Boolean,
-        plain: Boolean
+        plain: Boolean,
+        disabled: Boolean
     },
     data(){
         return {
             showSlot: true
         };
+    },
+    computed: {
+        classes(){
+            console.log(!!this.disabled);
+            return [
+                `${prefixCls}`,
+                {
+                    plain: this.type !== 'default' && !!this.plain,
+                    disabled: !!this.disabled,
+                    [`${this.custom}`]: this.custom !== '',
+                    [`${prefixCls}-round`]: !!this.round,
+                    [`${prefixCls}-${this.type}`]: this.type !== 'default',
+                    [`${prefixCls}-${this.size}`]: this.size !== 'default' && this.size
+                }
+            ];
+        }
+    },
+    methods: {
+        clickHandler(e){
+            !this.disabled && this.$emit('click',e);
+        }
     }
 }
 </script>
 
 <style lang="scss" scoped>
+
+    
 
 </style>
 

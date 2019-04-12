@@ -48,7 +48,7 @@ export default {
 		return {
 			list: [{
 				name: 'Button',
-				link: '#/button',
+				link: '#/buttons',
 				target: '_blank'
 			},{
 				name: 'Input',

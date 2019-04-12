@@ -33,7 +33,7 @@ module.exports = {
         'style-resources-loader': {
             preProcessor: 'scss',
             patterns: [
-                resolve('packages/assets/variable.scss')
+                resolve('examples/styles/variable.scss'),
             ]
         }
     }
