@@ -1,4 +1,5 @@
 $btnPre: 'yl-ui-button';
+$disabledSelector: '&.disabled,&.disabled:hover,&.disabled:active,&.disabled:focus';
 
 /* button view colors */
 $defaultHover: #57a3f3;
@@ -62,7 +63,7 @@ $dangerDisabled: #f97c5c;
         @include viewColor($defaultHover, #fff, $defaultHover);
     }
 
-    &.disabled,&.disabled:hover,&.disabled:active,&.disabled:focus{
+    #{$disabledSelector}{
         cursor: not-allowed;
         @include viewColor(#c0c4cc, #fff, #ebeef5);
     }
@@ -80,10 +81,11 @@ $dangerDisabled: #f97c5c;
             @include viewColor(#fff, $primaryColor, $primaryColor);
         }
     }
-    &.disabled,&.disabled:hover,&.disabled:active,&.disabled:focus{
+    #{$disabledSelector}{
         @include viewColor(#fff, $primaryDisabled, $primaryDisabled);
     }
 }
+
 .#{$btnPre}-info{
     @include viewColor(#fff, $infoColor, $infoColor);
 
@@ -96,7 +98,7 @@ $dangerDisabled: #f97c5c;
             @include viewColor(#fff, $infoColor, $infoColor);
         }
     }
-    &.disabled,&.disabled:hover,&.disabled:active,&.disabled:focus{
+    #{$disabledSelector}{
         @include viewColor(#fff, $infoDisabled, $infoDisabled);
     }
 }
@@ -113,7 +115,7 @@ $dangerDisabled: #f97c5c;
             @include viewColor(#fff, $successHover, $successHover);
         }
     }
-    &.disabled,&.disabled:hover,&.disabled:active,&.disabled:focus{
+    #{$disabledSelector}{
         @include viewColor(#fff, $successDisabled, $successDisabled);
     }
 }
@@ -130,7 +132,7 @@ $dangerDisabled: #f97c5c;
             @include viewColor(#fff, $warningColor, $warningColor);
         }
     }
-    &.disabled,&.disabled:hover,&.disabled:active,&.disabled:focus{
+    #{$disabledSelector}{
         @include viewColor(#fff, $warningDisabled, $warningDisabled);
     }
 }
@@ -147,7 +149,7 @@ $dangerDisabled: #f97c5c;
             @include viewColor(#fff, $dangerColor, $dangerColor);
         }
     }
-    &.disabled,&.disabled:hover,&.disabled:active,&.disabled:focus{
+    #{$disabledSelector}{
         @include viewColor(#fff, $dangerDisabled, $dangerDisabled);
     }
 }
