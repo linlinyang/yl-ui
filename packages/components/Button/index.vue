@@ -1,11 +1,11 @@
 <template>
 <div 
     :class="classes"
-    v-vue-tap='clickHandler'
+    @click='clickHandler'
     :disabled='disabled'
 >
     <Icon 
-        class="load-loop" 
+        class="yl-ui-load-loop" 
         type='loading'
         v-if='loading'
     ></Icon>
@@ -14,17 +14,20 @@
         :custom='customIcon'
         v-if="(icon || customIcon) && !loading"
     ></Icon>
-    <slot v-if="showSlot"></slot>
+    <span v-if="showSlot" ref="slot"><slot></slot></span>
 </div>
 </template>
 
 <script>
-import Iocn from '#c/Icon/';
+import Icon from '#c/Icon/';
 
 const prefixCls = 'yl-ui-button';
 
 export default {
     name: 'Button',
+    components: {
+        Icon
+    },
     props: {
         icon: {
             type: String,
@@ -42,7 +45,7 @@ export default {
         },
         size: {
             validator(val){
-                return ['small','large','default'].includes(val);
+                return ['default','small','mini'].includes(val);
             }
         },
         custom: {
@@ -61,7 +64,6 @@ export default {
     },
     computed: {
         classes(){
-            console.log(!!this.disabled);
             return [
                 `${prefixCls}`,
                 {
@@ -69,6 +71,7 @@ export default {
                     disabled: !!this.disabled,
                     [`${this.custom}`]: this.custom !== '',
                     [`${prefixCls}-round`]: !!this.round,
+                    [`${prefixCls}-loading`]: !!this.loading,
                     [`${prefixCls}-${this.type}`]: this.type !== 'default',
                     [`${prefixCls}-${this.size}`]: this.size !== 'default' && this.size
                 }
@@ -82,11 +85,4 @@ export default {
     }
 }
 </script>
-
-<style lang="scss" scoped>
-
-    
-
-</style>
-
 

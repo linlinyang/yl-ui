@@ -10,7 +10,7 @@
 		</template>
     </Header>
 
-    <div class="list">
+    <div class="full-size">
         <Button>
             <span>Default</span>
         </Button>
@@ -48,23 +48,53 @@
             <span>Danger,Plain</span>
         </Button>
         <Button disabled>
-            <span>Default</span>
+            <span>Default,Disabled</span>
         </Button>
         <Button type="primary" disabled>
-            <span>Primary,Danger</span>
+            <span>Primary,Disabled</span>
         </Button>
         <Button type="info" disabled>
-            <span>Info,Danger</span>
+            <span>Info,Disabled</span>
         </Button>
         <Button type="success" disabled>
-            <span>Success,Danger</span>
+            <span>Success,Disabled</span>
         </Button>
         <Button type="warning" disabled>
-            <span>Warning,Danger</span>
+            <span>Warning,Disabled</span>
         </Button>
         <Button type="danger" disabled>
-            <span>Danger,Danger</span>
+            <span>Danger,Disabled</span>
         </Button>
+        <Button loading >
+            <span>Default,Loading</span>
+        </Button>
+        <Button type="primary" loading >
+            <span>Primary,Loading</span>
+        </Button>
+        <Button type="info" loading >
+            <span>Info,Loading</span>
+        </Button>
+        <Button type="success" loading >
+            <span>Success,Loading</span>
+        </Button>
+        <Button type="warning" loading >
+            <span>Warning,Loading</span>
+        </Button>
+        <Button type="danger" loading >
+            <span>Danger,Loading</span>
+        </Button>
+    </div>
+
+    <div class="size-list">
+        <Button size='default'>Default</Button>
+        <Button size='small'>Small</Button>
+        <Button size='mini'>Mini</Button>
+    </div>
+
+    <div class="round-list">
+        <Button round >Default,Round</Button>
+        <Button size='small' round >Small,Round</Button>
+        <Button size='mini' round >Mini,Round</Button>
     </div>
 
 </div>
@@ -84,9 +114,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .list{
+    .full-size{
         padding: 0 15px;
 
+        .yl-ui-button{
+            margin-top: 14px;
+            width: 100%;
+        }
+    }
+    .size-list,.round-list{
+        padding: 0 15px;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-around;
+        align-items: center;
         .yl-ui-button{
             margin-top: 14px;
         }
