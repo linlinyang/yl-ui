@@ -4,6 +4,7 @@
         class="menu-item" 
         v-if='linkUrl != ""'
         :href="linkUrl"
+        ref="menuitem"
     >
         <slot></slot>
         <Icon :type='icon' :size='size'></Icon>

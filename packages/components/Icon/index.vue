@@ -1,7 +1,7 @@
 <!-- 图标组件 -->
 
 <template>
-    <i :class="classes" :style="styles" @click='handleClick'></i>
+    <i :class="classes" :style="styles" @click='handleClick' ref="icon"></i>
 </template>
 
 <script>

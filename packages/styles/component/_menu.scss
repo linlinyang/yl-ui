@@ -1,0 +1,19 @@
+$menuPre: '.yl-ui-menu';
+
+#{$menuPre}{
+    background: #fff;
+    border-radius: 5px;
+
+    #{$menuPre}-header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        cursor: pointer;
+        font-size: 16px;
+        
+        &.expanded{
+            color: #888;
+        }
+    }
+}

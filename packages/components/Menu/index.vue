@@ -1,13 +1,13 @@
 <template>
-<div class="menu" :class="expandCls">
+<div :class="classes">
 
-    <div class="menu-header" :class='headCls' v-vue-tap='handleExpand'>
+    <div :class='headCls' v-vue-tap='handleExpand' ref="menu">
         <span>{{ title }}</span>
         <Icon v-if='(icon || customIcon)' :type='icon' :custom='customIcon' size='30'></Icon>
     </div>
 
-    <collapse-transition >
-        <div class="menu-body" v-show='isExpand'>
+    <collapse-transition>
+        <div v-show='isExpand'>
             <slot name="items"></slot>
         </div>
     </collapse-transition>
@@ -18,7 +18,8 @@
 <script>
 import Icon from '#c/Icon/';
 import CollapseTransition from '#c/base/collapse-transition';
-import {queryAll} from '#/utils/query';
+
+const prefixCls = 'yl-ui-menu';
 
 export default {
     name: 'Menu',
@@ -51,16 +52,20 @@ export default {
         }
     },
     computed: {
-        headCls(){
-            return {
-                [`${this.custom}`]: this.custom != '',
-                'expanded': !!this.isExpand
-            };
+        classes(){
+            return [
+                `${prefixCls}`,
+                {active: !!this.isExpand}
+            ];
         },
-        expandCls(){
-            return {
-                 active: !!this.isExpand
-            };
+        headCls(){
+            return [
+                `${prefixCls}-header`,
+                {
+                    [`${this.custom}`]: this.custom != '',
+                    'expanded': !!this.isExpand
+                }
+            ];
         }
     },
     methods: {
@@ -72,32 +77,4 @@ export default {
     }
 }
 </script>
-
-<style lang="scss" scoped>
-    .menu{
-        background: #fff;
-        border-radius: 5px;
-
-        .menu-header{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            cursor: pointer;
-            font-size: 16px;
-
-            &.expanded{
-                color: #888;
-            }
-        }
-        
-    }
-
-</style>
-
-<style>
-    .collapse-transition{
-        transition:.2s height ease-in-out
-    }
-</style>
 
