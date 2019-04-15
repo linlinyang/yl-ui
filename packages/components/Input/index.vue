@@ -8,8 +8,7 @@
         <div class="yl-ui-input-prefix" v-if="prefixIcon">
             <Icon 
                 :type='prefixIcon' 
-                v-if='clearable && currentValue && !disabled'
-                @click='handleClear'
+                v-if='prefixIcon && !disabled'
             ></Icon>
         </div>
 
