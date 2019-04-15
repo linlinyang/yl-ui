@@ -47,6 +47,7 @@
 
 <script>
 import Icon from '#c/Icon/';
+import Emitter from '../../mixins/emitter';
 
 const prefixCls = 'yl-ui-input';
 
@@ -55,6 +56,7 @@ export default {
     components: {
         Icon
     },
+    mixins: [Emitter],
     props: {
         type: {
             type: String,

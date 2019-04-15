@@ -5,6 +5,14 @@ $prefixCls: '.yl-ui-input';
     overflow: hidden;
     font-size: 14px;
     width: 100%;
+    vertical-align: normal;
+}
+
+#{$prefixCls}-group{
+    line-height: normal;
+    width: 100%;
+    display: table;
+
 }
 
 #{$prefixCls}-inner{
