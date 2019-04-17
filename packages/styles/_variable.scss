@@ -34,3 +34,25 @@
         line-height: $lineHeight;
     }
 }
+
+@mixin pos(
+    $pos: absolute,
+    $top: 0,
+    $left: 0,
+    $bottom: null,
+    $right: null
+){
+    position: $pos;
+    @if $top {
+        top: $top;
+    }
+    @if $left {
+        left: $left;
+    }
+    @if $bottom{
+        bottom: $bottom;
+    }
+    @if $right {
+        right: $right;
+    }
+}

@@ -1,15 +1,16 @@
 <template>
     <div :class="wrapClasses">
 
-        <div class="yl-ui-input-prepend" v-if="prepend" v-show='slotReady'>
+        <div class="yl-ul-input-prepend-inner" v-if="prepend" v-show='slotReady'>
             <slot name="prepend"></slot>
         </div>
 
-        <div class="yl-ui-input-prefix" v-if="prefixIcon">
+        <div class="yl-ul-input-prefix-inner" v-if="prefixIcon">
             <Icon 
                 :type='prefixIcon' 
-                v-if='prefixIcon && !disabled'
+                v-if='prefixIcon'
             ></Icon>
+            <slot name="prefix"></slot>
         </div>
 
         <input 
@@ -30,15 +31,20 @@
             @compositionend="handleCompositionEnd"
         >
 
-        <div class="yl-ui-input-suffix" v-if="suffixIcon || clearable">
+        <div class="yl-ul-input-suffix-inner" v-if="suffixIcon">
             <Icon 
-                :type="clearable ? 'round-close' : suffixIcon"
-                v-if='clearable && currentValue && !disabled'
+                :type="suffixIcon"
+                v-if='suffixIcon'
+            ></Icon>
+             <Icon 
+                :type="fill-close"
+                v-if='clearable'
                 @click='handleClear'
             ></Icon>
+            <slot name="suffix"></slot>
         </div>
 
-        <div class="yl-ui-input-prepend" v-if="append" v-show="slotReady">
+        <div class="yl-ui-input-append-inner" v-if="append" v-show="slotReady">
             <slot name="append"></slot>
         </div>
 
@@ -117,14 +123,18 @@ export default {
                     [`${prefixCls}-group`]: this.prepend || this.append || (this.search && this.enterButton),
                     [`${prefixCls}-prepend`]: !!this.prepend,
                     [`${prefixCls}-append`]: !!this.append,
-                    [`${prefixCls}-prefix`]: this.prepend || this.prefixIcon,
-                    [`${prefixCls}-suffix`]: this.append || this.suffixIcon || this.clearable
+                    [`${prefixCls}-prefix`]: !!this.prefixIcon,
+                    [`${prefixCls}-suffix`]: !!this.suffixIcon || this.clearable
                 }
             ];
         },
         inputClasses(){
             return [
-                `${prefixCls}-inner`
+                `${prefixCls}-inner`,
+                {
+                    [`${prefixCls}-plain`]: this.plain,
+                    [`${prefixCls}-disabled`]: this.disabled
+                }
             ];
         }
     },

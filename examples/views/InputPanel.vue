@@ -12,8 +12,10 @@
 
     <div class="list">
 
-        <Input></Input>
-        <Input clearable ></Input>
+        <Input placeholder="Default"></Input>
+        <Input clearable value="可清除的输入框" ></Input>
+        <Input :plain="false" placeholder="非镂空的输入框"></Input>
+        <Input disabled value="Disabled" ></Input>
 
     </div>
 
