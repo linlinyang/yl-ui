@@ -14,7 +14,7 @@
         </div>
 
         <input 
-            class="yl-ui-input-core"
+            :class="inputClasses"
             :type="type"
             ref="input"
             :placeholder="placeholder"
@@ -124,8 +124,6 @@ export default {
                 {
                     custom: !!this.custom,
                     [`${prefixCls}-group`]: this.prepend || this.append || (this.search && this.enterButton),
-                    [`${prefixCls}-plain`]: this.plain,
-                    [`${prefixCls}-disabled`]: this.disabled,
                     [`${prefixCls}-prepend`]: !!this.prepend,
                     [`${prefixCls}-append`]: !!this.append,
                     [`${prefixCls}-prefix`]: !!this.prefixIcon || this.prefix,
@@ -135,7 +133,11 @@ export default {
         },
         inputClasses(){
             return [
-                `${prefixCls}-inner`,
+                `${prefixCls}-core`,
+                {
+                    [`${prefixCls}-plain`]: this.plain,
+                    [`${prefixCls}-disabled`]: this.disabled,
+                }
             ];
         }
     },
