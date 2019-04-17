@@ -1,23 +1,23 @@
 <template>
     <div :class="wrapClasses">
 
-        <div class="yl-ul-input-prepend-inner" v-if="prepend" v-show='slotReady'>
+        <div class="yl-ui-input-prefix-icon" v-if="prepend" v-show='slotReady'>
             <slot name="prepend"></slot>
         </div>
 
-        <div class="yl-ul-input-prefix-inner" v-if="prefixIcon">
+        <div class="yl-ui-input-prefix-icon" v-if="prefixIcon || prefix">
             <Icon 
                 :type='prefixIcon' 
                 v-if='prefixIcon'
             ></Icon>
-            <slot name="prefix"></slot>
+            <slot name="prefixIcon"></slot>
         </div>
 
         <input 
+            class="yl-ui-input-core"
             :type="type"
             ref="input"
             :placeholder="placeholder"
-            :class="inputClasses"
             :name="name"
             :disabled="disabled"
             :value="currentValue"
@@ -31,20 +31,21 @@
             @compositionend="handleCompositionEnd"
         >
 
-        <div class="yl-ul-input-suffix-inner" v-if="suffixIcon">
+        <div class="yl-ui-input-suffix-icon" v-if="suffixIcon || suffix || clearable">
             <Icon 
                 :type="suffixIcon"
                 v-if='suffixIcon'
             ></Icon>
-             <Icon 
-                :type="fill-close"
+            <Icon 
+                type="fill-close"
                 v-if='clearable'
+                custom='yl-ui-input-clear'
                 @click='handleClear'
             ></Icon>
-            <slot name="suffix"></slot>
+            <slot name="suffixIcon"></slot>
         </div>
 
-        <div class="yl-ui-input-append-inner" v-if="append" v-show="slotReady">
+        <div class="yl-ui-input-suffix-icon" v-if="append" v-show="slotReady">
             <slot name="append"></slot>
         </div>
 
@@ -109,6 +110,8 @@ export default {
         return {
             prepend: true,
             append: true,
+            prefix: true,
+            suffix: false,
             slotReady: false,
             currentValue: this.value,
             isComposing: false
@@ -121,20 +124,18 @@ export default {
                 {
                     custom: !!this.custom,
                     [`${prefixCls}-group`]: this.prepend || this.append || (this.search && this.enterButton),
+                    [`${prefixCls}-plain`]: this.plain,
+                    [`${prefixCls}-disabled`]: this.disabled,
                     [`${prefixCls}-prepend`]: !!this.prepend,
                     [`${prefixCls}-append`]: !!this.append,
-                    [`${prefixCls}-prefix`]: !!this.prefixIcon,
-                    [`${prefixCls}-suffix`]: !!this.suffixIcon || this.clearable
+                    [`${prefixCls}-prefix`]: !!this.prefixIcon || this.prefix,
+                    [`${prefixCls}-suffix`]: !!this.suffixIcon || this.clearable || this.suffix
                 }
             ];
         },
         inputClasses(){
             return [
                 `${prefixCls}-inner`,
-                {
-                    [`${prefixCls}-plain`]: this.plain,
-                    [`${prefixCls}-disabled`]: this.disabled
-                }
             ];
         }
     },
@@ -182,6 +183,8 @@ export default {
         const slots = this.$slots;
         this.prepend = slots.prepend !== undefined;
         this.append = slots.append !== undefined;
+        this.prefix = slots.prefixIcon !== undefined;
+        this.suffix = slots.prefixIcon !== undefined;
         this.slotReady = true;
     }
 }
