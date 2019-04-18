@@ -55,8 +55,8 @@ export default {
 				link: '#/input',
 				target: '_blank'
 			},{
-				name: 'List',
-				link: '/list'
+				name: 'Switch',
+				link: '#/switch'
 			}]
 		};
   	}

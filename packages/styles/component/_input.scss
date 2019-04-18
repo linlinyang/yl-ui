@@ -1,7 +1,13 @@
 $prefixCls: '.yl-ui-input';
 
+$borderRadius: 4px;
 $iconColor: #c0c4cc;
 $iconHoverColor: #909399;
+$inputColor: #606266;
+$inputBorderColor: #dcdfef;
+$disabledColor: #f5f7fa;
+$disabledBorderColor: #e4e7ed;
+$focusBorderColor: #57a3f3;
 
 %floatInnerIcon{
     @include size(null,100%,40px);
@@ -23,21 +29,20 @@ $iconHoverColor: #909399;
     position: relative;
     overflow: hidden;
     font-size: 14px;
-    width: 100%;
-    vertical-align: normal;
+    display: inline-block;
+    vertical-align: middle;
+}
 
-    &-group{
-        line-height: normal;
-        width: 100%;
-        display: inline-table;
-        border-collapse: separate;
-    }
-
-    &-core{
+#{$prefixCls}-wrap{
+    position: relative;
+    overflow: hidden;
+    vertical-align: middle;
+    
+    #{$prefixCls}-core{
         cursor: text;
         appearance: none;
         box-sizing: border-box;
-        @include fcw(inherit,#606266);
+        @include fcw(inherit,$inputColor);
         display: inline-block;
         @include size(100%,40px,1);
         outline: none;
@@ -46,40 +51,143 @@ $iconHoverColor: #909399;
         border: 0;
         outline: none;
         transition: 0.2s ease-in-out;
+    }
 
+    #{$prefixCls}-prefix-icon{
+        @include pos(absolute,0,8px);
+        @extend %floatInnerIcon;
+    }
+
+    #{$prefixCls}-suffix-icon{
+        @include pos(absolute,0,null,null,8px);
+        @extend %floatInnerIcon;
+    }
+}
+
+#{$prefixCls}-prefix #{$prefixCls}-core{
+    padding-left: 30px;
+}
+
+#{$prefixCls}-suffix #{$prefixCls}-core{
+    padding-right: 30px;
+}
+
+#{$prefixCls}-disabled{
+    #{$prefixCls}-core{
+        background-color: $disabledColor;
+        border-color: $disabledBorderColor;
+        color: $iconColor;
+        cursor: not-allowed;
+    }
+}
+
+#{$prefixCls}-group{
+    display: inline-table;
+
+    #{$prefixCls}-wrap{
+        display: table-cell;
+    }
+
+    #{$prefixCls}-prepend,#{$prefixCls}-append{
+        background: #fff;
+        display: table-cell;
+        vertical-align: middle;
+        width: 1px;
+        white-space: nowrap;
+        padding: 0 20px;
+        color: $inputColor;
+        position: relative;
+    }
+
+    #{$prefixCls}-prepend:after{
+        content: '';
+        @include size(1px,60%);
+        @include pos(absolute,20%,null,null,0);
+        background-color: $iconColor;
+    }
+
+    #{$prefixCls}-append:after{
+        content: '';
+        @include size(1px,60%);
+        @include pos(absolute,20%);
+        background-color: $iconColor;
+    }
+
+}
+
+%groupExtra{
+    border: 1px solid $inputBorderColor;
+    box-sizing: border-box;
+    background-color: $disabledColor;
+}
+
+#{$prefixCls}-plain{ 
+
+    #{$prefixCls}-core{
+        border-radius: 4px;
+        border: 1px solid $inputBorderColor;
+        
         &:hover{
             border-color: $iconColor;
         }
         &:focus{
-            border-color: #57a3f3;
+            border-color: $focusBorderColor;
         }
     }
-    
-    &-plain{
-        border-radius: 4px;
-        border: 1px solid #dcdfef;
-    }
 
-    &-disabled{
-        background-color: #f5f7fa;
-        border-color: #e4e7ed;
-        color: $iconColor;
-        cursor: not-allowed;
-    }
+    &#{$prefixCls}-group{
 
-    &-prefix-icon{
-        @include pos(absolute,0,5px);
-        @extend %floatInnerIcon;
-    }
+        #{$prefixCls}-prepend{
+            @extend %groupExtra;
+            border-top-left-radius: $borderRadius;
+            border-bottom-left-radius: $borderRadius;
+            border-right: 0;
 
-    &-suffix-icon{
-        @include pos(absolute,0,null,null,5px);
-        @extend %floatInnerIcon;
-    }
+            &:after{
+                width: 0;
+            }
+        }
 
-    &-prefix &-core,&-prepend &-core{
-        padding-left: 30px;
+        #{$prefixCls}-append{
+            @extend %groupExtra;
+            border-left: 0;
+            border-top-right-radius: $borderRadius;
+            border-bottom-right-radius: $borderRadius;
+
+            &:after{
+                width: 0;
+            }
+        }
+
+        &-prepend #{$prefixCls}-core{
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        &-append #{$prefixCls}-core{
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
     }
 }
 
+#{$prefixCls}-small{
+    font-size: 13px;
 
+    #{$prefixCls}-core{
+        height: 36px;
+    }
+    #{$prefixCls}-prefix-icon,#{$prefixCls}-suffix-icon{
+        line-height: 36px;
+    }
+}
+#{$prefixCls}-mini{
+    font-size: 12px;
+
+    #{$prefixCls}-core{
+        height: 32px;
+    }
+    #{$prefixCls}-prefix-icon,#{$prefixCls}-suffix-icon{
+        line-height: 32px;
+    }
+}

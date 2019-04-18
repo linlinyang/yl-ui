@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import ButtonPanel from './views/ButtonPanel.vue'
 import InputPanel from './views/InputPanel.vue'
+import SwitchPanel from './views/SwitchPanel.vue'
 
 
 Vue.use(Router)
@@ -19,5 +20,9 @@ export default new Router({
 		path: '/input',
 		name: 'InputPanel',
 		component: InputPanel
+	},{
+		path: '/switch',
+		name: 'SwitchPanel',
+		component: SwitchPanel
 	}]
 })

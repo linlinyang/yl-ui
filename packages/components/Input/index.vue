@@ -1,51 +1,53 @@
 <template>
     <div :class="wrapClasses">
 
-        <div class="yl-ui-input-prefix-icon" v-if="prepend" v-show='slotReady'>
+        <div class="yl-ui-input-prepend" v-if="prepend" v-show='slotReady'>
             <slot name="prepend"></slot>
         </div>
 
-        <div class="yl-ui-input-prefix-icon" v-if="prefixIcon || prefix">
-            <Icon 
-                :type='prefixIcon' 
-                v-if='prefixIcon'
-            ></Icon>
-            <slot name="prefixIcon"></slot>
+        <div :class="innerClasses">
+            <div class="yl-ui-input-prefix-icon" v-if="prefixIcon || prefix">
+                <Icon 
+                    :type='prefixIcon' 
+                    v-if='prefixIcon'
+                ></Icon>
+                <slot name="prefixIcon"></slot>
+            </div>
+
+            <input 
+                class="yl-ui-input-core"
+                :type="type"
+                ref="input"
+                :placeholder="placeholder"
+                :name="name"
+                :disabled="disabled"
+                :value="currentValue"
+                :maxlength="maxlength"
+                :readonly="readonly"
+                @input="handleInput"
+                @change="handleChange"
+                @focus="handleFocus"
+                @blur="handleBlur"
+                @compositionstart="handleCompositionStart"
+                @compositionend="handleCompositionEnd"
+            >
+
+            <div class="yl-ui-input-suffix-icon" v-if="suffixIcon || suffix || clearable">
+                <Icon 
+                    :type="suffixIcon"
+                    v-if='suffixIcon'
+                ></Icon>
+                <Icon 
+                    type="fill-close"
+                    v-if='clearable'
+                    custom='yl-ui-input-clear'
+                    @click='handleClear'
+                ></Icon>
+                <slot name="suffixIcon"></slot>
+            </div>
         </div>
 
-        <input 
-            :class="inputClasses"
-            :type="type"
-            ref="input"
-            :placeholder="placeholder"
-            :name="name"
-            :disabled="disabled"
-            :value="currentValue"
-            :maxlength="maxlength"
-            :readonly="readonly"
-            @input="handleInput"
-            @change="handleChange"
-            @focus="handleFocus"
-            @blur="handleBlur"
-            @compositionstart="handleCompositionStart"
-            @compositionend="handleCompositionEnd"
-        >
-
-        <div class="yl-ui-input-suffix-icon" v-if="suffixIcon || suffix || clearable">
-            <Icon 
-                :type="suffixIcon"
-                v-if='suffixIcon'
-            ></Icon>
-            <Icon 
-                type="fill-close"
-                v-if='clearable'
-                custom='yl-ui-input-clear'
-                @click='handleClear'
-            ></Icon>
-            <slot name="suffixIcon"></slot>
-        </div>
-
-        <div class="yl-ui-input-suffix-icon" v-if="append" v-show="slotReady">
+        <div class="yl-ui-input-append" v-if="append" v-show="slotReady">
             <slot name="append"></slot>
         </div>
 
@@ -121,27 +123,33 @@ export default {
         wrapClasses(){
             return [
                 `${prefixCls}`,
+            {
+                custom: !!this.custom,
+                [`${prefixCls}-group`]: this.prepend || this.append || (this.search && this.enterButton),
+                [`${prefixCls}-group-prepend`]: !!this.prepend,
+                [`${prefixCls}-group-append`]: !!this.append,
+                [`${prefixCls}-plain`]: this.plain,
+                [`${prefixCls}-disabled`]: this.disabled,
+                [`${prefixCls}-${this.size}`]: !!this.size && this.size !== 'default'
+            }];
+        },
+        innerClasses(){
+            return [
+                `${prefixCls}-wrap`,
                 {
-                    custom: !!this.custom,
-                    [`${prefixCls}-group`]: this.prepend || this.append || (this.search && this.enterButton),
-                    [`${prefixCls}-prepend`]: !!this.prepend,
-                    [`${prefixCls}-append`]: !!this.append,
                     [`${prefixCls}-prefix`]: !!this.prefixIcon || this.prefix,
                     [`${prefixCls}-suffix`]: !!this.suffixIcon || this.clearable || this.suffix
-                }
-            ];
-        },
-        inputClasses(){
-            return [
-                `${prefixCls}-core`,
-                {
-                    [`${prefixCls}-plain`]: this.plain,
-                    [`${prefixCls}-disabled`]: this.disabled,
                 }
             ];
         }
     },
     methods: {
+        focus(){
+            this.$refs.input.focus();
+        },
+        blur(){
+            this.$refs.input.blur();
+        },
         setCurrentValue(val){
             if(val === this.currentValue){
                 return ;
@@ -186,7 +194,7 @@ export default {
         this.prepend = slots.prepend !== undefined;
         this.append = slots.append !== undefined;
         this.prefix = slots.prefixIcon !== undefined;
-        this.suffix = slots.prefixIcon !== undefined;
+        this.suffix = slots.suffixIcon !== undefined;
         this.slotReady = true;
     }
 }
