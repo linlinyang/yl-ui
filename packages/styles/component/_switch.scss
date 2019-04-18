@@ -1,0 +1,38 @@
+$prefixCls: '.yl-ui-switch';
+
+$inActiveColor: #ccc;
+$activeColor: #1AAD19;
+
+#{$prefixCls}{
+    display: inline-block;
+    @include size(44px,22px,20px);
+    border-radius: 22px;
+    border: 1px solid $inActiveColor;
+    vertical-align: middle;
+    position: relative;
+    cursor: pointer;
+    background-color: $inActiveColor;
+    user-select: none;
+    
+    box-sizing: border-box;
+
+    &-thumb{
+        @include size(18px,18px);
+        border-radius: 18px;
+        background: #fff;
+        @include pos(absolute,1px,1px);
+        transition: left 10.2s ease-in-out,width 10.2s ease-in-out;
+    }
+
+    &:active &-thumb{
+        width: 26px;
+    }
+}
+
+#{$prefixCls}-checked{
+    background-color: $activeColor;
+
+    #{$prefixCls}-thumb{
+        left: 20px;
+    }
+}

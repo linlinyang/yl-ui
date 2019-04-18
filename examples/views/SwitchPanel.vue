@@ -12,6 +12,9 @@
 
     <div class="list">
 
+        <iSwitch></iSwitch>
+        <iSwitch value ></iSwitch>
+        <iSwitch activeColor='#2d8cf0' ></iSwitch>
 
     </div>
 
@@ -20,36 +23,24 @@
 
 <script>
 import Header from '@/components/Header/';
-import Input from '#c/Input/';
+import iSwitch from '#c/Switch/';
 
 export default {
-    name: 'InputPanel',
+    name: 'SwitchPanel',
     components: {
         Header,
-        Input
+        iSwitch
     }
 }
 </script>
 
 <style lang="scss" scoped>
     .list{
-        padding: 0 15px;
-        position: relative;
-
-        .yl-ui-input{
-            width: 100%;
-            margin-top: 15px;
-        }
-    }
-
-    .size-list{
-        padding: 0 15px;
-        margin-top: 15px;
-        position: relative;
         text-align: center;
-
-        .yl-ui-input{
-            margin-left: 15px;
+        
+        .yl-ui-switch{
+            margin-left: 20px;
         }
     }
+
 </style>
