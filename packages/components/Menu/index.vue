@@ -17,7 +17,7 @@
 
 <script>
 import Icon from '#c/Icon/';
-import CollapseTransition from '#c/base/collapse-transition';
+import CollapseTransition from '#/transitions/collapse-transition';
 
 const prefixCls = 'yl-ui-menu';
 

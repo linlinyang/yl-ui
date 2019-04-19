@@ -5,9 +5,9 @@
         ref='switch'
     >
         <input type="hidden" :name='name' :value='currentValue'>
-        <div class="yl-ui-switch-text" v-if="checked"></div>
-        <div class="yl-ui-switch-thumb"></div>
-        <div class="yl-ui-switch-text" v-if="!checked"></div>
+        <div class="yl-ui-switch-text">
+            <span>{{ checked ? activeText : inActiveText}}</span>
+        </div>
     </div>
 </template>
 
@@ -79,19 +79,28 @@ export default {
     },
     watch: {
         checked(val){
-            const color = val ? this.activeColor : this.inActiveColor;
-            const ySwitch = this.$refs.switch;
-            ySwitch.style.borderColor = color;
-            ySwitch.style.backgroundColor = color;
+            this.setBackgroundColor();
         }
     },
     methods:{
+        setBackgroundColor(){
+            const color = this.checked ? this.activeColor : this.inActiveColor;
+
+            if(color){
+                const switchEl = this.$refs.switch;
+                switchEl.style.backgroundColor = color;
+                switchEl.style.borderColor = color;
+            }
+        },
         handleClick(e){
             const val = this.currentValue === this.activeValue ? this.inActiveValue : this.activeValue;
             this.currentValue = val;
             this.$emit('input',val);
             this.$emit('on-change',val);
         }
+    },
+    mounted(){
+        this.setBackgroundColor();
     }
 }
 </script>

@@ -14,7 +14,9 @@
 
         <iSwitch></iSwitch>
         <iSwitch value ></iSwitch>
-        <iSwitch activeColor='#2d8cf0' ></iSwitch>
+        <iSwitch activeColor='#2d8cf0' inActiveColor='#ff4949'></iSwitch>
+        <iSwitch activeText='ON' inActiveText='OFF' ></iSwitch>
+        <iSwitch activeText='开' inActiveText='关' value ></iSwitch>
 
     </div>
 

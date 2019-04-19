@@ -1,0 +1,16 @@
+@mixin fadeMotion(
+    $className
+) {
+    .#{$className}-enter,.#{$className}-leave-to{
+        opacity: 0;
+    }
+    .#{$className}-enter-active{
+        transition: opacity 0.2s ease-in;
+    }
+    .#{$className}-enter-to,.#{$className}-leave{
+        opacity: 1;
+    }
+    .#{$className}-leave-active{
+        transition: opacity 0.1s ease-out;
+    }
+}
