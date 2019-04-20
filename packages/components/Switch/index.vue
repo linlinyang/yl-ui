@@ -3,11 +3,9 @@
         :class="wrapClasses"
         @click='handleClick'
         ref='switch'
+        :title='checked ? activeText : inActiveText'
     >
         <input type="hidden" :name='name' :value='currentValue'>
-        <div class="yl-ui-switch-text">
-            <span>{{ checked ? activeText : inActiveText}}</span>
-        </div>
     </div>
 </template>
 
@@ -93,6 +91,9 @@ export default {
             }
         },
         handleClick(e){
+            if(this.disabled){
+                return false;
+            }
             const val = this.currentValue === this.activeValue ? this.inActiveValue : this.activeValue;
             this.currentValue = val;
             this.$emit('input',val);

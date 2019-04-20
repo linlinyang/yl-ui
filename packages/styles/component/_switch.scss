@@ -12,9 +12,7 @@ $activeColor: #1AAD19;
 
 #{$prefixCls}{
     display: inline-block;
-    height: $defaultSize + 4;
-    line-height: $defaultSize + 4;
-    border-radius: $defaultSize;
+    line-height: 1;
     vertical-align: middle;
     position: relative;
     cursor: pointer;
@@ -22,18 +20,48 @@ $activeColor: #1AAD19;
     background-color: $inActiveColor;
     user-select: none;
     @include fcw(12px,#fff);
-    min-width: double($defaultSize + 1);
 
-    &-text{
-        position: relative;
-        padding: 0 $defaultSize + 5 0 5px;
-        transition: all 0.2s ease-in-out;
+    &:after{
+        content: '';
+        @include pos(absolute,2px,2px);
+        background-color: #fff;
+        border-radius: 50%;
+        transition: left 0.2s ease-in-out,width 0.2s ease-in-out;
+    }
+    
+    &-checked{
+        background: $activeColor;
+    }
+
+    &-disabled{
+        cursor: not-allowed;
     }
 }
 
-#{$prefixCls}-checked{
-    #{$prefixCls}-text{
-        padding: 0 5px 0 $defaultSize + 5;
+$sizes: (
+    default: $defaultSize,
+    small: $smallSize,
+    mini: $miniSize
+);
 
+@each $type, $size in $sizes {
+    $append: if($type == default,'','-'+$type);
+    $gapSize: $size + 4;
+
+    #{$prefixCls}#{$append}{
+        @include size(double($gapSize),$gapSize);
+        border-radius: $size;
+
+        &:after{
+            @include size($size,$size);
+        }
+
+        &:active:after{
+            width: $size * 5 / 4;
+        }
+
+        &#{$prefixCls}-checked:after{
+            left: $gapSize;
+        }
     }
 }
