@@ -57,6 +57,9 @@ export default {
 			},{
 				name: 'Switch',
 				link: '#/switch'
+			},{
+				name: 'Radio',
+				link: '#/radio'
 			}]
 		};
   	}

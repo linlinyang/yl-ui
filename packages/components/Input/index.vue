@@ -61,7 +61,7 @@ import Emitter from '../../mixins/emitter';
 const prefixCls = 'yl-ui-input';
 
 export default {
-    name: 'input',
+    name: 'Input',
     components: {
         Icon
     },

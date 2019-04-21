@@ -44,7 +44,20 @@ function parent(component,name){
     return parent;
 }
 
-function parents(component,name){}
+function parents(component,name){
+    let parent = component.$parent;
+    name = name.trim();
+
+    let ret = [];
+    if(parent){
+        if(parent.$options.name === name){
+            ret.push(parent);
+        }
+        return ret.concat(parents(parent,name));
+    }else{
+        return [];
+    }
+}
 
 function prevComponent(component){}
 
@@ -58,5 +71,7 @@ function siblings(component){}
 
 export{
     query,
-    queryAll
+    queryAll,
+    parent,
+    parents
 };

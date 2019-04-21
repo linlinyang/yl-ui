@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 import ButtonPanel from './views/ButtonPanel.vue'
 import InputPanel from './views/InputPanel.vue'
 import SwitchPanel from './views/SwitchPanel.vue'
+import RadioPanel from './views/RadioPanel'
 
 
 Vue.use(Router)
@@ -24,5 +25,9 @@ export default new Router({
 		path: '/switch',
 		name: 'SwitchPanel',
 		component: SwitchPanel
+	},{
+		path: '/radio',
+		name: 'RadioPanel',
+		component: RadioPanel
 	}]
 })

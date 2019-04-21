@@ -14,7 +14,7 @@
 const prefixCls = 'yl-ui-switch';
 
 export default {
-    name: 'ySwitch',
+    name: 'YSwitch',
     props: {
         value:{
             type: [Boolean,Number,String],

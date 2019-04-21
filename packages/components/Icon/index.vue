@@ -9,7 +9,7 @@ import cssUnit from '#/utils/cssUnit';
 const prefixCls = 'yl-ui-icon';
 
 export default {
-    name: 'icon',
+    name: 'Icon',
     props: {
         type: {
             type: String,

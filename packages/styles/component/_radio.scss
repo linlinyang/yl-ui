@@ -1,0 +1,74 @@
+$prefixCls: '.yl-ui-radio';
+$prefixGroup: #{$prefixCls}-group;
+
+$unselectedBackColor: #f3f3f3;
+$unselectedBorderColor: #dcdee2;
+$selectBackColor: #fff;
+$selectBorderColor: #2d8cf0;
+$radioDefaultSize: 14px;
+
+#{$prefixGroup}{
+    display: inline-block;
+    font-size: 12px;
+    vertical-align: middle;
+}
+
+#{$prefixGroup}-vertical{
+    #{$prefixCls}-wrap{
+        display: block;
+        height: 30px;
+        line-height: 30px;
+    }
+}
+
+#{$prefixCls}-wrap{
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 12px;
+    white-space: nowrap;
+    cursor: pointer;
+    position: relative;
+    line-height: 1;
+    margin-right: 10px;
+}
+
+#{$prefixCls}{
+    display: inline-block;
+    margin-right: 5px;
+    vertical-align: middle;
+    @include size($radioDefaultSize,$radioDefaultSize);
+    border-radius: 50%;
+    background-color: $unselectedBackColor;
+    border: 1px solid $unselectedBorderColor;
+    position: relative;
+    transition: all 0.2s ease-in-out;
+
+    &-checked{
+        background-color: $selectBackColor;
+        border-color: $selectBorderColor;
+
+        &:before{
+            content: '';
+            @include pos(absolute,0,0,0,0);
+            @include size(10px,10px);
+            background-color: $selectBorderColor;
+            transition: all 0.2s ease-in-out;
+            margin: auto;
+            border-radius: 50%;
+        }
+    }
+
+    input{
+        @include pos(absolute,0,0,0,0);
+        opacity: 0;
+        z-index: 1;
+        cursor: pointer;
+    }
+
+    &-label{
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+}
