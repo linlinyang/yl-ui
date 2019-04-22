@@ -1,14 +1,13 @@
 <template>
-    <div :class="wrapClasses">
+    <label :class="wrapClasses">
         <div :class="radioBox">
             <input 
                 ref="radio"
                 type="radio"
                 :name="groupName"
-                :checked="checked"
+                :checked="currentValue"
                 :value="value"
                 :disabled="disabled"
-                :class="inputClasses"
                 @change="handleChange"
                 @focus="handleFocus"
                 @blur="handleBlur"
@@ -17,7 +16,7 @@
         <div class="yl-ui-radio-label" v-if='hasLabel' v-show="slotReady">
             <slot></slot>
         </div>
-    </div>
+    </label>
 </template>
 
 <script>
@@ -46,10 +45,10 @@ export default {
             groupName: this.name,
             parent: parent(this,'RadioGroup'),
             inGroup: false,
-            currentValue: this.value,
+            currentValue: this.checked,
             slotReady: false,
             hasLabel: true,
-            active: this.checked
+            focus: false
         };
     },
     computed:{
@@ -62,22 +61,33 @@ export default {
             return [
                 `${prefixCls}`,
                 {
-                    [`${prefixCls}-checked`]: this.active
+                    [`${prefixCls}-checked`]: this.currentValue,
+                    [`${prefixCls}-focus`]: this.focus 
                 }
             ];
-        },
-        inputClasses(){}
+        }
     },
     methods: {
-        handleChange(){
-            console.log('change');
-            this.active = !this.active;
+        handleChange(e){
+            if(this.disabled){
+                return ;
+            }
+            const target = e.target || e.srcElement;
+
+            this.currentValue = target.checked;
+            this.$emit('input',this.currentValue);
+
+            if(this.inGroup){
+                this.parent.change(this.value);
+            }else{
+                this.$emit('on-change',this.value);
+            }
         },
         handleFocus(){
-            console.log('focus');
+            this.focus = true;
         },
         handleBlur(e){
-            console.log('blur');
+            this.focus = false;
         }
     },
     mounted(){

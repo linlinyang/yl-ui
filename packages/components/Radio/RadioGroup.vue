@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import {queryAll} from '#/utils/query';
 
 const prefixCls = 'yl-ui-radio-group';
 let seed = 0;
@@ -41,7 +42,8 @@ export default {
     },
     data(){
         return {
-            currentValue: this.value
+            currentValue: this.value,
+            childRadios: []
         };
     },
     computed: {
@@ -59,7 +61,18 @@ export default {
     },
     methods: {
         updateValue(){
-
+            if(this.childRadios = queryAll(this,'Radio')){
+                this.childRadios.forEach((child) => {
+                    child.currentValue = child.value === this.currentValue;
+                });
+            }
+            console.log(this.currentValue);
+        },
+        change(value){
+            this.currentValue = value;
+            this.updateValue();
+            this.$emit('input',value);
+            this.$emit('on-change',value);
         }
     }
 }

@@ -6,6 +6,7 @@ $unselectedBorderColor: #dcdee2;
 $selectBackColor: #fff;
 $selectBorderColor: #2d8cf0;
 $radioDefaultSize: 14px;
+$radioInnerDefaultSize: 8px;
 
 #{$prefixGroup}{
     display: inline-block;
@@ -41,6 +42,7 @@ $radioDefaultSize: 14px;
     background-color: $unselectedBackColor;
     border: 1px solid $unselectedBorderColor;
     position: relative;
+    box-sizing: border-box;
     transition: all 0.2s ease-in-out;
 
     &-checked{
@@ -50,12 +52,16 @@ $radioDefaultSize: 14px;
         &:before{
             content: '';
             @include pos(absolute,0,0,0,0);
-            @include size(10px,10px);
+            @include size($radioInnerDefaultSize,$radioInnerDefaultSize);
             background-color: $selectBorderColor;
             transition: all 0.2s ease-in-out;
             margin: auto;
             border-radius: 50%;
         }
+    }
+
+    &-focus{
+        box-shadow: 0 0 0 2px rgba(45,140,240,0.2);
     }
 
     input{
