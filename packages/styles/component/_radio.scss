@@ -8,31 +8,6 @@ $selectBorderColor: #2d8cf0;
 $radioDefaultSize: 14px;
 $radioInnerDefaultSize: 8px;
 
-#{$prefixGroup}{
-    display: inline-block;
-    font-size: 12px;
-    vertical-align: middle;
-}
-
-#{$prefixGroup}-vertical{
-    #{$prefixCls}-wrap{
-        display: block;
-        height: 30px;
-        line-height: 30px;
-    }
-}
-
-#{$prefixCls}-wrap{
-    display: inline-block;
-    vertical-align: middle;
-    font-size: 12px;
-    white-space: nowrap;
-    cursor: pointer;
-    position: relative;
-    line-height: 1;
-    margin-right: 10px;
-}
-
 #{$prefixCls}{
     display: inline-block;
     margin-right: 5px;
@@ -45,25 +20,6 @@ $radioInnerDefaultSize: 8px;
     box-sizing: border-box;
     transition: all 0.2s ease-in-out;
 
-    &-checked{
-        background-color: $selectBackColor;
-        border-color: $selectBorderColor;
-
-        &:before{
-            content: '';
-            @include pos(absolute,0,0,0,0);
-            @include size($radioInnerDefaultSize,$radioInnerDefaultSize);
-            background-color: $selectBorderColor;
-            transition: all 0.2s ease-in-out;
-            margin: auto;
-            border-radius: 50%;
-        }
-    }
-
-    &-focus{
-        box-shadow: 0 0 0 2px rgba(45,140,240,0.2);
-    }
-
     input{
         @include pos(absolute,0,0,0,0);
         opacity: 0;
@@ -74,7 +30,99 @@ $radioInnerDefaultSize: 8px;
     &-label{
         display: inline-block;
         vertical-align: middle;
-        font-size: 12px;
+        font-size: $radioDefaultSize;
         white-space: nowrap;
+    }
+}
+
+#{$prefixCls}-wrap{
+    display: inline-block;
+    vertical-align: middle;
+    @include fcw(14px,#515a6e);
+    font-size: 14px;
+    white-space: nowrap;
+    cursor: pointer;
+    position: relative;
+    line-height: 1;
+    margin-right: 10px;
+
+    &-checked{
+        #{$prefixCls}{
+            background-color: $selectBackColor;
+            border-color: $selectBorderColor;
+
+            &:before{
+                content: '';
+                @include pos(absolute,0,0,0,0);
+                @include size($radioInnerDefaultSize,$radioInnerDefaultSize);
+                background-color: $selectBorderColor;
+                transition: all 0.2s ease-in-out;
+                margin: auto;
+                border-radius: 50%;
+            }
+        }
+    }
+    
+    &-focus{
+        #{$prefixCls}{
+            box-shadow: 0 0 0 2px rgba(45,140,240,0.2);
+        }
+    }
+}
+
+#{$prefixGroup}{
+    display: inline-block;
+    font-size: $radioDefaultSize;
+    vertical-align: middle;
+}
+
+#{$prefixGroup}-vertical{
+    #{$prefixCls}-wrap{
+        display: block;
+        height: 30px;
+        line-height: 30px;
+    }
+}
+
+#{$prefixGroup}-button{
+    #{$prefixCls}-wrap{
+        display: inline-block;
+        height: 32px;
+        line-height: 30px;
+        padding: 0 15px;
+        transition: all 0.2s ease-in-out;
+        border: 1px solid $unselectedBorderColor;
+        background: #fff;
+        position: relative;
+        margin: 0;
+        border-left: 0;
+
+        &:first-child{
+            border-radius: 4px 0 0 4px;
+            border-left: 1px solid $unselectedBorderColor;
+        }
+
+        &:last-child{
+            border-radius: 0 4px 4px 0;
+        }
+
+        #{$prefixCls}{
+            width: 0;
+            height: 0;
+            margin-right: 0;
+            opacity: 0;
+        }
+
+        &-checked{
+            background: #fff;
+            border-color: $selectBorderColor;
+            color: $selectBorderColor;
+            box-shadow: -1px 0 0 0 $selectBorderColor;
+
+            &:first-child{
+                box-shadow: none;
+                border-color: $selectBorderColor;
+            }
+        }
     }
 }

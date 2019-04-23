@@ -5,7 +5,7 @@
                 ref="radio"
                 type="radio"
                 :name="groupName"
-                :checked="currentValue"
+                :checked="checked"
                 :value="value"
                 :disabled="disabled"
                 @change="handleChange"
@@ -28,10 +28,6 @@ export default {
     name: 'Radio',
     props: {
         value: String,
-        checked:{
-            type: Boolean,
-            default: false
-        },
         disabled: {
             type: Boolean,
             default: false
@@ -45,7 +41,7 @@ export default {
             groupName: this.name,
             parent: parent(this,'RadioGroup'),
             inGroup: false,
-            currentValue: this.checked,
+            checked: false,
             slotReady: false,
             hasLabel: true,
             focus: false
@@ -54,16 +50,16 @@ export default {
     computed:{
         wrapClasses(){
             return [
-                `${prefixCls}-wrap`
+                `${prefixCls}-wrap`,
+                {
+                    [`${prefixCls}-wrap-checked`]: this.checked,
+                    [`${prefixCls}-wrap-focus`]: this.focus 
+                }
             ];
         },
         radioBox(){
             return [
-                `${prefixCls}`,
-                {
-                    [`${prefixCls}-checked`]: this.currentValue,
-                    [`${prefixCls}-focus`]: this.focus 
-                }
+                `${prefixCls}`
             ];
         }
     },
@@ -74,8 +70,8 @@ export default {
             }
             const target = e.target || e.srcElement;
 
-            this.currentValue = target.checked;
-            this.$emit('input',this.currentValue);
+            this.checked = target.checked;
+            this.$emit('input',this.value);
 
             if(this.inGroup){
                 this.parent.change(this.value);

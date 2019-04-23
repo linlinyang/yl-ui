@@ -53,8 +53,8 @@ export default {
                 {
                     [`${this.custom}`]: !!this.custom,
                     [`${prefixCls}-vertical`]: this.vertical,
-                    [`${prefixCls}-type`]: !!this.type && this.type !== 'default',
-                    [`${prefixCls}-size`]: !!this.size && this.size !== 'default'
+                    [`${prefixCls}-${this.size}`]: !!this.size && this.size !== 'default',
+                    [`${prefixCls}-${this.type}`]: !!this.type && this.type !== 'default'
                 }
             ];
         }
@@ -63,10 +63,9 @@ export default {
         updateValue(){
             if(this.childRadios = queryAll(this,'Radio')){
                 this.childRadios.forEach((child) => {
-                    child.currentValue = child.value === this.currentValue;
+                    child.checked = child.value === this.currentValue;
                 });
             }
-            console.log(this.currentValue);
         },
         change(value){
             this.currentValue = value;
@@ -74,6 +73,9 @@ export default {
             this.$emit('input',value);
             this.$emit('on-change',value);
         }
+    },
+    mounted(){
+        this.updateValue();
     }
 }
 </script>
