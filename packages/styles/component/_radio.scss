@@ -1,25 +1,50 @@
 $prefixCls: '.yl-ui-radio';
 $prefixGroup: #{$prefixCls}-group;
 
-$unselectedBackColor: #f3f3f3;
-$unselectedBorderColor: #dcdee2;
-$disabledColor: #ccc;
+$defaultColor: #515a6e;
+$defaultFontSize: 14px;
+$smallFontSize: 12px;
+$miniFontSize: 12px;
+$defaultSize: 14px;
+$smallSize: 12px;
+$miniSize: 11px;
+
+$checkedBackColor: #fff;
+$checkedBorderColor: #2d8cf0;
+$uncheckedBackColor: #f3f3f3;
+$uncheckedBorderColor: #dcdee2;
+
+$radioDefaultSize: 8px;
+$radioSmallSize: 6px;
+$radioMiniSize: 5px;
+$radioBackColor: #2d8cf0;
+
+$disabledBackColor: #ccc;
 $disabledBorderColor: #dcdee2;
-$disabledBackColor: #f7f7f7;
-$selectBackColor: #fff;
-$selectBorderColor: #2d8cf0;
-$radioDefaultSize: 14px;
-$radioInnerDefaultSize: 8px;
+
+$btnDefaultHeight: 30px;
+$btnDefaultPadding: 0 15px;
+$btnUncheckedBorderColor: #f3f3f3;
+$btnUncheckedBackColor: #fff;
+$btnCheckedBackColor: #fff;
+$btnCheckedBorderColor: #2d8cf0;
+$btnDisabledBackColor: #f7f7ff;
+$btnDisabledBorderColor: #dcdee2;
+$btnDisabledColor: #ccc;
+$btnCheckedDisabledBackColor: #e6e6e6;
+$btnCheckedDisabledBorderColor: #dcdee2;
+$btnCheckedDisabledFontColor: #fff;
+
 $shadowColor: rgba(45,140,240,0.2);
 
 #{$prefixCls}{
     display: inline-block;
     margin-right: 5px;
     vertical-align: middle;
-    @include size($radioDefaultSize,$radioDefaultSize);
+    @include size($defaultSize,$defaultSize);
     border-radius: 50%;
-    background-color: $unselectedBackColor;
-    border: 1px solid $unselectedBorderColor;
+    background-color: $uncheckedBackColor;
+    border: 1px solid $uncheckedBorderColor;
     position: relative;
     box-sizing: border-box;
     transition: all 0.2s ease-in-out;
@@ -34,7 +59,7 @@ $shadowColor: rgba(45,140,240,0.2);
     &-label{
         display: inline-block;
         vertical-align: middle;
-        font-size: $radioDefaultSize;
+        font-size: $defaultFontSize;
         white-space: nowrap;
     }
 }
@@ -42,8 +67,7 @@ $shadowColor: rgba(45,140,240,0.2);
 #{$prefixCls}-wrap{
     display: inline-block;
     vertical-align: middle;
-    @include fcw(14px,#515a6e);
-    font-size: 14px;
+    @include fcw($defaultFontSize,$defaultColor);
     white-space: nowrap;
     cursor: pointer;
     position: relative;
@@ -52,14 +76,14 @@ $shadowColor: rgba(45,140,240,0.2);
 
     &-checked{
         #{$prefixCls}{
-            background-color: $selectBackColor;
-            border-color: $selectBorderColor;
+            background-color: $checkedBackColor;
+            border-color: $checkedBorderColor;
 
             &:before{
                 content: '';
                 @include pos(absolute,0,0,0,0);
-                @include size($radioInnerDefaultSize,$radioInnerDefaultSize);
-                background-color: $selectBorderColor;
+                @include size($radioDefaultSize,$radioDefaultSize);
+                background-color: $radioBackColor;
                 transition: all 0.2s ease-in-out;
                 margin: auto;
                 border-radius: 50%;
@@ -77,10 +101,10 @@ $shadowColor: rgba(45,140,240,0.2);
         cursor: not-allowed;
         #{$prefixCls}{
             cursor: not-allowed;
-            border-color: $unselectedBorderColor;
+            border-color: $disabledBorderColor;
     
             &:before{
-                background-color: $disabledColor;
+                background-color: $disabledBackColor;
             }
             input{
                 cursor: not-allowed;
@@ -91,7 +115,7 @@ $shadowColor: rgba(45,140,240,0.2);
 
 #{$prefixGroup}{
     display: inline-block;
-    font-size: $radioDefaultSize;
+    font-size: $defaultFontSize;
     vertical-align: middle;
 }
 
@@ -106,19 +130,19 @@ $shadowColor: rgba(45,140,240,0.2);
 #{$prefixGroup}-button{
     #{$prefixCls}-wrap{
         display: inline-block;
-        height: 32px;
-        line-height: 30px;
-        padding: 0 15px;
+        height: $btnDefaultHeight;
+        line-height: $btnDefaultHeight - 2;
+        padding: $btnDefaultPadding;
         transition: all 0.2s ease-in-out;
-        border: 1px solid $unselectedBorderColor;
-        background: #fff;
+        border: 1px solid $btnUncheckedBorderColor;
+        background-color: $btnUncheckedBackColor;
         position: relative;
         margin: 0;
         border-left: 0;
 
         &:first-child{
             border-radius: 4px 0 0 4px;
-            border-left: 1px solid $unselectedBorderColor;
+            border-left: 1px solid $btnUncheckedBorderColor;
         }
 
         &:last-child{
@@ -133,28 +157,62 @@ $shadowColor: rgba(45,140,240,0.2);
         }
 
         &-checked{
-            background: #fff;
-            border-color: $selectBorderColor;
-            color: $selectBorderColor;
-            box-shadow: -1px 0 0 0 $selectBorderColor;
+            background: $btnCheckedBackColor;
+            border-color: $btnCheckedBorderColor;
+            color: $btnCheckedBorderColor;
+            box-shadow: -1px 0 0 0 $btnCheckedBorderColor;
 
             &:first-child{
                 box-shadow: none;
-                border-color: $selectBorderColor;
+                border-color: $btnCheckedBorderColor;
             }
 
             &#{$prefixCls}-wrap-disabled{
                 box-shadow: none;
-                background-color: #e6e6e6;
-                border-color: #dcdee2;
-                color: #fff;
+                background-color: $btnCheckedDisabledBackColor;
+                border-color: $btnCheckedDisabledBorderColor;
+                color: $btnCheckedDisabledFontColor;
             }
         }
 
         &-disabled{
-            background-color: $disabledBackColor;
-            border-color: $disabledBorderColor;
-            color: $disabledColor;
+            background-color: $btnDisabledBackColor;
+            border-color: $btnDisabledBorderColor;
+            color: $btnDisabledColor;
+        }
+    }
+}
+
+#{$prefixGroup}-small{
+    #{$prefixCls}-wrap{
+        #{$prefixCls}{
+            @include size($smallSize,$smallSize);
+
+            &-label{
+                font-size: $smallFontSize;
+            }
+        }
+        &-checked{
+            #{$prefixCls}:before{
+                @include size($radioSmallSize,$radioSmallSize);
+            }
+        }
+    }
+}
+
+#{$prefixGroup}-mini{
+    #{$prefixCls}-wrap{
+        #{$prefixCls}{
+            @include size($miniSize,$miniSize);
+
+            &-label{
+                font-size: $miniFontSize;
+            }
+        }
+        &-checked{
+            #{$prefixCls}:before{
+                @include size($radioMiniSize,$radioMiniSize);
+            }
         }
     }
 }

@@ -32,6 +32,36 @@
         </div>
 
         <div class="row">
+            <label>垂直选择</label>
+            <RadioGroup name='system' value='3' vertical >
+                <Radio value='1'>window</Radio>
+                <Radio value='2'>ios</Radio>
+                <Radio value='3'>linux</Radio>
+                <Radio value='4'>其他</Radio>
+            </RadioGroup>
+        </div>
+
+        <div class="row">
+            <label>small尺寸</label>
+            <RadioGroup name='small-size' value='1' size='small' >
+                <Radio value='1'>window</Radio>
+                <Radio value='2'>ios</Radio>
+                <Radio value='3'>linux</Radio>
+                <Radio value='4'>其他</Radio>
+            </RadioGroup>
+        </div>
+
+        <div class="row">
+            <label>mini尺寸</label>
+            <RadioGroup name='mini-size' value='1' size='mini' >
+                <Radio value='1'>window</Radio>
+                <Radio value='2'>ios</Radio>
+                <Radio value='3'>linux</Radio>
+                <Radio value='4'>其他</Radio>
+            </RadioGroup>
+        </div>
+
+        <div class="row">
             <label>单选按钮</label>
             <RadioGroup name='city' value='1' type='button'>
                 <Radio value='1'>北京</Radio>

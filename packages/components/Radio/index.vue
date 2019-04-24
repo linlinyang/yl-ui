@@ -93,7 +93,7 @@ export default {
 
         if(this.parent){
             this.inGroup = true;
-            this.groupName = this.parent.name;
+            this.groupName = this.groupName && this.parent.name;
         }
     }
 }
