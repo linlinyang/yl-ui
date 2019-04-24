@@ -53,7 +53,8 @@ export default {
                 `${prefixCls}-wrap`,
                 {
                     [`${prefixCls}-wrap-checked`]: this.checked,
-                    [`${prefixCls}-wrap-focus`]: this.focus 
+                    [`${prefixCls}-wrap-focus`]: this.focus,
+                    [`${prefixCls}-wrap-disabled`]: this.disabled
                 }
             ];
         },

@@ -67,11 +67,11 @@ export default {
                 });
             }
         },
-        change(value){
-            this.currentValue = value;
+        change(val){
+            this.currentValue = val;
             this.updateValue();
-            this.$emit('input',value);
-            this.$emit('on-change',value);
+            this.$emit('input',val);
+            this.$emit('on-change',val);
         }
     },
     mounted(){

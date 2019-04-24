@@ -14,7 +14,7 @@
 
         <div class="row">
             <label>默认单选</label>
-            <RadioGroup name='gender' value='1' v-model="selectVal">
+            <RadioGroup name='gender' v-model="selectVal">
                 <Radio value='1'>男</Radio>
                 <Radio value='2'>女</Radio>
                 <Radio value='3'>未知</Radio>
@@ -23,10 +23,29 @@
         </div>
 
         <div class="row">
+            <label>disabled</label>
+            <RadioGroup name='genderDis' value='2'>
+                <Radio value='1'>男</Radio>
+                <Radio value='2' disabled >女</Radio>
+                <Radio value='3'>未知</Radio>
+            </RadioGroup>
+        </div>
+
+        <div class="row">
             <label>单选按钮</label>
-            <RadioGroup name='gender' value='1' type='button'>
+            <RadioGroup name='city' value='1' type='button'>
                 <Radio value='1'>北京</Radio>
                 <Radio value='2'>上海</Radio>
+                <Radio value='3'>广州</Radio>
+                <Radio value='4'>深证</Radio>
+            </RadioGroup>
+        </div>
+
+        <div class="row">
+            <label>disabled</label>
+            <RadioGroup name='cityDis' value='2' type='button'>
+                <Radio value='1'>北京</Radio>
+                <Radio value='2' disabled >上海</Radio>
                 <Radio value='3'>广州</Radio>
                 <Radio value='4'>深证</Radio>
             </RadioGroup>
@@ -46,7 +65,7 @@ export default {
     name: 'RadioPanel',
     data(){
         return {
-            selectVal: '2'
+            selectVal: '1'
         }
     },
     components: {

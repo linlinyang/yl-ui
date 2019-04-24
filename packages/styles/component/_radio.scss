@@ -3,10 +3,14 @@ $prefixGroup: #{$prefixCls}-group;
 
 $unselectedBackColor: #f3f3f3;
 $unselectedBorderColor: #dcdee2;
+$disabledColor: #ccc;
+$disabledBorderColor: #dcdee2;
+$disabledBackColor: #f7f7f7;
 $selectBackColor: #fff;
 $selectBorderColor: #2d8cf0;
 $radioDefaultSize: 14px;
 $radioInnerDefaultSize: 8px;
+$shadowColor: rgba(45,140,240,0.2);
 
 #{$prefixCls}{
     display: inline-block;
@@ -65,7 +69,22 @@ $radioInnerDefaultSize: 8px;
     
     &-focus{
         #{$prefixCls}{
-            box-shadow: 0 0 0 2px rgba(45,140,240,0.2);
+            box-shadow: 0 0 0 2px $shadowColor;
+        }
+    }
+
+    &-disabled{
+        cursor: not-allowed;
+        #{$prefixCls}{
+            cursor: not-allowed;
+            border-color: $unselectedBorderColor;
+    
+            &:before{
+                background-color: $disabledColor;
+            }
+            input{
+                cursor: not-allowed;
+            }
         }
     }
 }
@@ -123,6 +142,19 @@ $radioInnerDefaultSize: 8px;
                 box-shadow: none;
                 border-color: $selectBorderColor;
             }
+
+            &#{$prefixCls}-wrap-disabled{
+                box-shadow: none;
+                background-color: #e6e6e6;
+                border-color: #dcdee2;
+                color: #fff;
+            }
+        }
+
+        &-disabled{
+            background-color: $disabledBackColor;
+            border-color: $disabledBorderColor;
+            color: $disabledColor;
         }
     }
 }
