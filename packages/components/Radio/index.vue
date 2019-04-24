@@ -80,11 +80,13 @@ export default {
                 this.$emit('on-change',this.value);
             }
         },
-        handleFocus(){
+        handleFocus(e){
             this.focus = true;
+            this.$emit('focus',e);
         },
         handleBlur(e){
             this.focus = false;
+            this.$emit('blur',e);
         }
     },
     mounted(){

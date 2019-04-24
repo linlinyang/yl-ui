@@ -5,6 +5,7 @@ import ButtonPanel from './views/ButtonPanel.vue'
 import InputPanel from './views/InputPanel.vue'
 import SwitchPanel from './views/SwitchPanel.vue'
 import RadioPanel from './views/RadioPanel'
+import CheckboxPanel from './views/CheckboxPanel'
 
 
 Vue.use(Router)
@@ -29,5 +30,9 @@ export default new Router({
 		path: '/radio',
 		name: 'RadioPanel',
 		component: RadioPanel
+	},{
+		path: '/checkbox',
+		name: 'CheckboxPanel',
+		component: CheckboxPanel
 	}]
 })

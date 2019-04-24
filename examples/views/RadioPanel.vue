@@ -80,6 +80,26 @@
                 <Radio value='4'>深证</Radio>
             </RadioGroup>
         </div>
+        
+        <div class="row">
+            <label>small尺寸</label>
+            <RadioGroup name='small-btn' value='1' type='button' size='small'>
+                <Radio value='1'>北京</Radio>
+                <Radio value='2'>上海</Radio>
+                <Radio value='3'>广州</Radio>
+                <Radio value='4'>深证</Radio>
+            </RadioGroup>
+        </div>
+
+        <div class="row">
+            <label>mini尺寸</label>
+            <RadioGroup name='small-btn' value='1' type='button' size='mini'>
+                <Radio value='1'>北京</Radio>
+                <Radio value='2'>上海</Radio>
+                <Radio value='3'>广州</Radio>
+                <Radio value='4'>深证</Radio>
+            </RadioGroup>
+        </div>
 
     </div>
 
@@ -113,6 +133,7 @@ export default {
         width: 100%;
         box-sizing: border-box;
         flex-flow: column nowrap;
+        padding-bottom: 30px;
 
         .row{
             display: flex;

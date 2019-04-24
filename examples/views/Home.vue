@@ -60,6 +60,9 @@ export default {
 			},{
 				name: 'Radio',
 				link: '#/radio'
+			},{
+				name: 'Checkbox',
+				link: '#/checkbox'
 			}]
 		};
   	}

@@ -22,8 +22,12 @@ $radioBackColor: #2d8cf0;
 $disabledBackColor: #ccc;
 $disabledBorderColor: #dcdee2;
 
-$btnDefaultHeight: 30px;
+$btnDefaultHeight: 36px;
 $btnDefaultPadding: 0 15px;
+$btnSmallHeight: 32px;
+$btnSmallPadding: 0 15px;
+$btnMiniHeight: 24px;
+$btnMiniPadding: 0 12px;
 $btnUncheckedBorderColor: #f3f3f3;
 $btnUncheckedBackColor: #fff;
 $btnCheckedBackColor: #fff;
@@ -154,6 +158,12 @@ $shadowColor: rgba(45,140,240,0.2);
             height: 0;
             margin-right: 0;
             opacity: 0;
+
+            input{
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
         }
 
         &-checked{
@@ -198,6 +208,16 @@ $shadowColor: rgba(45,140,240,0.2);
             }
         }
     }
+    &#{$prefixGroup}-button{
+        #{$prefixCls}-wrap{
+            #{$prefixCls}{
+                @include size(0,0);
+            }
+            height: $btnSmallHeight;
+            line-height: $btnSmallHeight - 2;
+            padding: $btnSmallPadding;
+        }
+    }
 }
 
 #{$prefixGroup}-mini{
@@ -213,6 +233,16 @@ $shadowColor: rgba(45,140,240,0.2);
             #{$prefixCls}:before{
                 @include size($radioMiniSize,$radioMiniSize);
             }
+        }
+    }
+    &#{$prefixGroup}-button{
+        #{$prefixCls}-wrap{
+            #{$prefixCls}{
+                @include size(0,0);
+            }
+            height: $btnMiniHeight;
+            line-height: $btnMiniHeight - 2;
+            padding: $btnMiniPadding;
         }
     }
 }

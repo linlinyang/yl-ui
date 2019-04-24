@@ -10,7 +10,7 @@ import {queryAll} from '#/utils/query';
 const prefixCls = 'yl-ui-radio-group';
 let seed = 0;
 const now = +new Date();
-const groupDefaultName = () => `ylUIGroup_${now}_${seed++}${Math.floor(Math.random() * 8999) + 1000}`;
+const groupDefaultName = () => `ylUIRadio_${now}_${seed++}${Math.floor(Math.random() * 8999) + 1000}`;
 
 export default {
     name: 'RadioGroup',
