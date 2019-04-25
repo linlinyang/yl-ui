@@ -5,14 +5,14 @@
                 ref='checkbox'
                 type="checkbox"
                 :name='groupName'
-                :checked='curChecked'
+                :checked='checked'
                 :value='value'
                 :disabled='disabled'
                 @blur='handleBlur'
                 @focus='handleFocus'
                 @change='handleChange'
             >
-            <Icon v-if="curChecked" type='correct' :color='iconColor'></Icon>
+            <Icon v-if="checked" type='correct' :color='iconColor' :size='iconSize'></Icon>
         </div>
         <div class="yl-ui-checkbox-label" v-if='hasSlot' v-show='slotReady'>
             <slot></slot>
@@ -31,12 +31,8 @@ export default {
         Icon
     },
     props: {
-        value: String,
+        value: [String,Boolean],
         disabled: {
-            type: Boolean,
-            default: false
-        },
-        checked: {
             type: Boolean,
             default: false
         },
@@ -50,7 +46,7 @@ export default {
     },
     data(){
         return {
-            curChecked: this.checked,
+            checked: false,
             hasSlot: true,
             slotReady: false,
             groupName: this.name,
@@ -64,7 +60,7 @@ export default {
             return [
                 `${prefixCls}-wrap`,
                 {
-                    [`${prefixCls}-wrap-checked`]: !!this.curChecked,
+                    [`${prefixCls}-wrap-checked`]: !!this.checked,
                     [`${prefixCls}-wrap-disabled`]: !!this.disabled,
                     [`${prefixCls}-wrap-focus`]: !!this.focus,
                     [`${prefixCls}-wrap-${this.size}`]: !!this.size && this.size !== 'default'
@@ -78,6 +74,9 @@ export default {
         },
         iconColor(){
             return this.disabled ? '#ccc' : '#fff';
+        },
+        iconSize(){
+            return this.size === 'default' ? 14 : 12;
         }
     },
     methods: {
@@ -95,16 +94,16 @@ export default {
             }
             const target = e.target || e.srcElement;
 
-            this.curChecked = target.checked;
-            this.$emit('input',e);
+            this.checked = target.checked;
+            this.$emit('input',this.checked);
 
             if(this.inGroup){
                 this.parent.change({
                     value: this.value,
-                    checked: this.curChecked
+                    checked: this.checked
                 });
             }else{
-                this.$emit('on-change',this.curChecked);
+                this.$emit('on-change',this.checked);
             }
         }
     },
@@ -115,14 +114,19 @@ export default {
         if(this.parent){
             this.inGroup = true;
             this.groupName = this.groupName && this.parent.name
+        }else{
+            this.checked = !!this.value;
         }
     },
     watch: {
-        checked(newVal){
-
-        },
         value(newVal){
-            
+            this.$nextTick(() => {
+                if(this.inGroup){
+                    this.parent.updateValue();
+                }else{
+                    this.checked = !!newVal;
+                }
+            });
         }
     }
 }

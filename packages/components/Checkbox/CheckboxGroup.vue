@@ -56,7 +56,7 @@ export default {
         updateValue(){
             const childs = queryAll(this,'Checkbox');
             childs.forEach((child) => {
-                child.curChecked = this.currentValue.includes(child.value);
+                child.checked = this.currentValue.includes(child.value);
             });
         },
         change(valObj){

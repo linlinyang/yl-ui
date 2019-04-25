@@ -3,8 +3,11 @@ $groupfixCls: #{$prefixCls}-group;
 
 $defaultColor: #515a6e;
 $defaultSize: 16px;
-$defaultIconSize: 14px;
+$smallSize: 14px;
+$miniSize: 13px;
 $defaultFontSize: 14px;
+$smallFontSiz: 12px;
+$miniFontSize: 13px;
 
 $uncheckedBackColor: #fff;
 $uncheckedBorderColor: #dcdee2;
@@ -30,6 +33,7 @@ $disabledBorderColor: #dcdee2;
     line-height: $defaultSize;
     transition: all 0.2s ease-in-out;
     margin-right: 8px;
+    text-align: center;
 
     input{
         opacity: 0;
@@ -47,9 +51,22 @@ $disabledBorderColor: #dcdee2;
     .yl-ui-icon{
         @include pos(absolute,0,0,0,0);
         margin: auto;
-        font-size: $defaultIconSize;
     }
 
+    &-small{
+        @include size($smallSize,$smallSize);
+
+        #{$prefixCls}-label{
+            font-size: $smallFontSize;
+        }
+    }
+    &-mini{
+        @include size($miniSize,$miniSize);
+
+        #{$prefixCls}-label{
+            font-size: $miniFontSize;
+        }
+    }
 }
 
 #{$prefixCls}-wrap{
@@ -84,6 +101,60 @@ $disabledBorderColor: #dcdee2;
             &-label{
                 cursor: not-allowed;
                 color: $disabledColor;
+            }
+        }
+    }
+}
+
+#{$groupfixCls}{
+    display: inline-block;
+    font-size: $defaultFontSize;
+    vertical-align: middle;
+}
+
+#{$groupfixCls}-vertical{
+    #{$prefixCls}-wrap{
+        display: block;
+        height: 30px;
+        line-height: 30px;
+    }
+}
+
+#{$groupfixCls}-small{
+    #{$prefixCls}-wrap{
+        margin-right: 10px;
+
+        #{$prefixCls}{
+            @include size($smallSize,$smallSize);
+            line-height: $smallSize;
+            margin-right: 6px;
+
+            &-label{
+                font-size: $smallFontSize;
+            }
+
+            .yl-ui-icon{
+                font-size: $smallFontSiz;
+            }
+        }
+    }
+}
+
+#{$groupfixCls}-mini{
+    #{$prefixCls}-wrap{
+        margin-right: 8px;
+
+        #{$prefixCls}{
+            @include size($miniSize,$miniSize);
+            line-height: $miniSize;
+            margin-right: 4px;
+
+            &-label{
+                font-size: $miniFontSize;
+            }
+
+            .yl-ui-icon{
+                font-size: $miniFontSize;
             }
         }
     }
