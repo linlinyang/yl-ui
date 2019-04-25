@@ -97,6 +97,13 @@ export default {
             this.inGroup = true;
             this.groupName = this.groupName && this.parent.name;
         }
+    },
+    watch: {
+        value(newVal){
+            if(this.value !== newValue && this.inGroup){
+                this.parent.change(newVal);
+            }
+        }
     }
 }
 </script>

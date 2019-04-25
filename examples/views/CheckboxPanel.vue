@@ -13,13 +13,31 @@
     <div class="list">
 
         <div class="row">
-            <label>默认单选</label>
+            <label>默认</label>
             <CheckboxGroup name='fruit' v-model="selectVal">
                 <Checkbox value='1'>苹果</Checkbox>
                 <Checkbox value='2'>西瓜</Checkbox>
                 <Checkbox value='3'>香蕉</Checkbox>
             </CheckboxGroup>
-            <div class="help-block">选中值为：{{ selectVal }}</div>
+            <div class="help-block">{{ selectVal }}</div>
+        </div>
+
+        <div class="row">
+            <label>disabled</label>
+            <CheckboxGroup name='fruit1'>
+                <Checkbox value='1'>苹果</Checkbox>
+                <Checkbox value='2' disabled>西瓜</Checkbox>
+                <Checkbox value='3'>香蕉</Checkbox>
+            </CheckboxGroup>
+        </div>
+
+        <div class="row">
+            <label>disabled选中</label>
+            <CheckboxGroup name='fruit1' :value='disabledSelect'>
+                <Checkbox value='1'>苹果</Checkbox>
+                <Checkbox value='2' disabled>西瓜</Checkbox>
+                <Checkbox value='3'>香蕉</Checkbox>
+            </CheckboxGroup>
         </div>
 
     </div>
@@ -36,7 +54,8 @@ export default {
     name: 'checkboxPanel',
     data(){
         return {
-            selectVal: '1'
+            selectVal: ['3'],
+            disabledSelect: ['2']
         }
     },
     components: {

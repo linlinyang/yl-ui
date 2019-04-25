@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import {queryAll} from '#/utils/query.js';
 
 const prefixCls = 'yl-ui-checkbox-group';
 let seed = 0;
@@ -15,8 +16,10 @@ export default {
     name: 'CheckboxGroup',
     props: {
         value: {
-            type: [String,Number,Array],
-            default: ''
+            type: [Array],
+            default(){
+                return [];
+            }
         },
         size: {
             validator(val){
@@ -50,9 +53,33 @@ export default {
         }
     },
     methods: {
-
+        updateValue(){
+            const childs = queryAll(this,'Checkbox');
+            childs.forEach((child) => {
+                child.curChecked = this.currentValue.includes(child.value);
+            });
+        },
+        change(valObj){
+            this.currentValue = this.currentValue.filter(value => value !== valObj.value);
+            if(valObj.checked){
+                this.currentValue.push(valObj.value);
+            }
+            
+            this.$emit('input',this.currentValue);
+            this.$emit('on-change',this.currentValue);
+        }
     },
-    mounted(){}
+    mounted(){
+        this.updateValue();
+    },
+    watch: {
+        value(newVal){
+            this.currentValue = newVal;
+            this.$nextTick(() => {
+                this.updateValue();
+            });
+        }
+    }
 };
 
 </script>

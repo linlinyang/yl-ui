@@ -1,0 +1,90 @@
+$prefixCls: '.yl-ui-checkbox';
+$groupfixCls: #{$prefixCls}-group;
+
+$defaultColor: #515a6e;
+$defaultSize: 16px;
+$defaultIconSize: 14px;
+$defaultFontSize: 14px;
+
+$uncheckedBackColor: #fff;
+$uncheckedBorderColor: #dcdee2;
+$checkedBackColor: #2d8cf0;
+$checkedBorderColor: #2d8cf0;
+
+$shadowColor: rgba(45,140,240,0.2);
+
+$disabledColor: #ccc;
+$disabledBackColor: #f3f3f3;
+$disabledBorderColor: #dcdee2;
+
+#{$prefixCls}{
+    display: inline-block;
+    vertical-align: middle;
+    white-space: nowrap;
+    cursor: pointer;
+    position: relative;
+    background-color: $uncheckedBackColor;
+    border: 1px solid $uncheckedBorderColor;
+    border-radius: 2px;
+    @include size($defaultSize,$defaultSize);
+    line-height: $defaultSize;
+    transition: all 0.2s ease-in-out;
+    margin-right: 8px;
+
+    input{
+        opacity: 0;
+        @include pos(absolute,0,0,0,0);
+        cursor: pointer;
+    }
+
+    &-label{
+        vertical-align: middle;
+        display: inline-block;
+        font-size: $defaultFontSize;
+        cursor: pointer;
+    }
+
+    .yl-ui-icon{
+        @include pos(absolute,0,0,0,0);
+        margin: auto;
+        font-size: $defaultIconSize;
+    }
+
+}
+
+#{$prefixCls}-wrap{
+    margin-right: 12px;
+    position: relative;
+    cursor: pointer;
+
+    &-checked{
+        #{$prefixCls}{
+            background-color: $checkedBackColor;
+            border-color: $checkedBorderColor;
+        }
+    }
+
+    &-focus{
+        #{$prefixCls}{
+            box-shadow: 0 0 0 2px $shadowColor;
+        }
+    }
+
+    &-disabled{
+        cursor: not-allowed;
+        #{$prefixCls}{
+            cursor: not-allowed;
+            background-color: $disabledBackColor;
+            border-color: $disabledBorderColor;
+
+            input{
+                cursor: not-allowed;
+            }
+
+            &-label{
+                cursor: not-allowed;
+                color: $disabledColor;
+            }
+        }
+    }
+}

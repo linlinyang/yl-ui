@@ -76,6 +76,16 @@ export default {
     },
     mounted(){
         this.updateValue();
+    },
+    watch: {
+        value(newVal){
+            if(this.currentValue !== newVal){
+                this.currentValue = newVal;
+                this.$nextTick(() => {
+                    this.updateValue();
+                });
+            }
+        }
     }
 }
 </script>
