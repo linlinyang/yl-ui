@@ -1,0 +1,26 @@
+$prefixCls: '.yl-ui-slider';
+
+$sliderBackColor: #e8eaec;
+$sliderActiveColor: #57a3f3;
+$dotColor: #ccc;
+$barHeight: 4px;
+$thumbSize: 20px;
+$dotSize: 4px;
+
+#{$prefixCls}{
+    display: inline-block;
+    width: 100%;
+    height: $barHeight;
+    background-color: $sliderBackColor;
+    border-radius: 2px;
+    position: relative;
+    vertical-align: middle;
+    cursor: pointer;
+
+    &-stop{
+        @include pos();
+        @include size($dotSize,$barHeight);
+        background-color: $dotColor;
+        cursor: pointer;
+    }
+}

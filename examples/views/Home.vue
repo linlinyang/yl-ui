@@ -63,6 +63,9 @@ export default {
 			},{
 				name: 'Checkbox',
 				link: '#/checkbox'
+			},{
+				name: 'Slider',
+				link: '#/Slider'
 			}]
 		};
   	}
