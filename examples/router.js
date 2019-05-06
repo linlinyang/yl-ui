@@ -7,6 +7,7 @@ import SwitchPanel from './views/SwitchPanel.vue'
 import RadioPanel from './views/RadioPanel'
 import CheckboxPanel from './views/CheckboxPanel'
 import SliderPanel from './views/SliderPanel'
+import TooltipPanel from './views/TooltipPanel'
 
 
 Vue.use(Router)
@@ -39,5 +40,9 @@ export default new Router({
 		path: '/slider',
 		name: 'SliderPanel',
 		component: SliderPanel
+	},{
+		path: '/tooltip',
+		name: 'TooltipPanel',
+		component: TooltipPanel
 	}]
 })

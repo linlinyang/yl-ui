@@ -16,6 +16,8 @@
             ></div>
         </template>
 
+        <div :class="thumbCls"></div>
+
     </div>
 </template>
 
@@ -88,6 +90,11 @@ export default {
                     [`${prefixCls}-range`]: !!this.range,
                     [`${prefixCls}-${this.size}`]: !!this.size && this.size !== 'default'
                 }
+            ];
+        },
+        thumbCls(){
+            return [
+                `${prefixCls}-button-wrap`
             ];
         },
         rangeValue(){

@@ -11,19 +11,32 @@
 	</Header>
 
     <div class="list">
-		<Menu icon='category' title='表单'>
-			<template #items>
-				<menu-item 
-					v-for="(row,index) in list" 
-					:key='index'
-					:linkUrl='row.link'
-				>
-					<template>
-						<span>{{ row.name }}</span>
-					</template>
-				</menu-item>
-			</template>
-		</Menu>
+			<Menu icon='category' title='表单'>
+				<template #items>
+					<menu-item 
+						v-for="(row,index) in formList" 
+						:key='index'
+						:linkUrl='row.link'
+					>
+						<template>
+							<span>{{ row.name }}</span>
+						</template>
+					</menu-item>
+				</template>
+			</Menu>
+			<Menu icon='success' title="操作反馈">
+				<template #items>
+					<menu-item 
+						v-for="(row,index) in handleList" 
+						:key='index'
+						:linkUrl='row.link'
+					>
+						<template>
+							<span>{{ row.name }}</span>
+						</template>
+					</menu-item>
+				</template>
+			</Menu>
     </div>
   </div>
 </template>
@@ -46,7 +59,7 @@ export default {
 	},
 	data(){
 		return {
-			list: [{
+			formList: [{
 				name: 'Button',
 				link: '#/buttons',
 				target: '_blank'
@@ -66,6 +79,10 @@ export default {
 			},{
 				name: 'Slider',
 				link: '#/Slider'
+			}],
+			handleList: [{
+				name: 'Tooltip',
+				link: '#/Tooltip'
 			}]
 		};
   	}
