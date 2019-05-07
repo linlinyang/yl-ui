@@ -1,5 +1,8 @@
 <template>
-    <div :class="classes">
+    <div 
+        :class="classes"
+        @mouseenter="handlerMouseEnter"
+    >
         <div :class="[prefixCls + '-ref']" ref="reference">
             <slot></slot>
         </div>
@@ -40,6 +43,12 @@ export default {
         },
         maxWidth:{
             type: [Number,String]
+        },
+        placement: {
+            validator(val){
+                return ['top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left', 'left-start', 'left-end', 'right', 'right-start', 'right-end'].includes(val);
+            },
+            default: 'bottom'
         }
     },
     data(){
@@ -65,6 +74,9 @@ export default {
                 }
             ];
         }
+    },
+    methods: {
+        handlerMouseEnter(){}
     }
 }
 </script>
