@@ -1,15 +1,26 @@
+import Popper from 'popper.js';
+
 export default {
     props: {
         placement: {
-            type: String,
-            default: 'bottom'
+            validator(val){
+                if(typeof val !== 'string'){
+                    return false;
+                }
+                return /^(top|left|bottom|right)(-start|-end)?$/.test(val);
+            },
+            default: 'top'
         },
         reference: Object,
         popper: Object,
         offset: {
+            type: [Number,String],
             default: 0
         },
-        transition: String,
+        showPopper: {
+            type: Boolean,
+            default: false
+        },
         options: {
             type: Object,
             default(){
@@ -19,7 +30,7 @@ export default {
                             gpuAcceleration: false
                         },
                         preventOverflow: {
-                            boundaiesElment: 'window'
+                            boundaiesElment: window
                         }
                     }
                 };
@@ -28,21 +39,38 @@ export default {
     },
     data(){
         return {
-            visible: false
+            visible: this.showPopper
         };
     },
     watch: {
         visible(val){
             if(val){
-                
+                this.$emit('on-popper-show');
             }else{
-
+                this.$emit('on-popper-hide');
             }
         }
     },
     methods: {
-        updatePopper(){
+        createPopper(){
+            const reference = this.reference || this.$refs.reference;
+            const popper = this.popper || this.$refs.popper;
+            const options = this.options;
 
+            options.placement = this.placement;
+            if(this.offset){
+                options.modifiers.offset = {
+                    offset: this.offset
+                };
+            }
+            options.onCreate = () => {
+                this.$nextTick(this.updatePopper);
+            };
+
+            this.popperJS = new Popper(reference,popper,options);
+        },
+        updatePopper(){
+            this.popperJS ? this.popperJS.update() : this.createPopper();
         }
     },
     updated(){

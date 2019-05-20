@@ -2,6 +2,7 @@
     <div 
         :class="classes"
         @mouseenter="handlerMouseEnter"
+        @mouseleave="handlerMouseLeave"
     >
         <div :class="[prefixCls + '-ref']" ref="reference">
             <slot></slot>
@@ -23,11 +24,13 @@
 </template>
 
 <script>
+import popper from '#/mixins/popper.js';
 
 const prefixCls = 'yl-ui-tooltip';
 
 export default {
     name: 'ToolTip',
+    mixins: [popper],
     props: {
         disabled: {
             type: Boolean,
@@ -46,9 +49,12 @@ export default {
         },
         placement: {
             validator(val){
-                return ['top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left', 'left-start', 'left-end', 'right', 'right-start', 'right-end'].includes(val);
+                if(typeof val !== 'string'){
+                    return false;
+                }
+                return /^(top|left|bottom|right)(-start|-end)?$/.test(val);
             },
-            default: 'bottom'
+            default: 'top'
         }
     },
     data(){
@@ -76,7 +82,12 @@ export default {
         }
     },
     methods: {
-        handlerMouseEnter(){}
+        handlerMouseEnter(){
+            this.visiable = true;
+        },
+        handlerMouseLeave(){
+            this.visiable = false;
+        }
     }
 }
 </script>
