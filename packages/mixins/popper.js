@@ -26,7 +26,7 @@ export default {
             default(){
                 return {
                     modifiers: {
-                        computedStyle: {
+                        computeStyle: {
                             gpuAcceleration: false
                         },
                         preventOverflow: {

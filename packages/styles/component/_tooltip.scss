@@ -1,2 +1,22 @@
 $prefixCls: '.yl-ui-tooltip';
 
+$backColor: #303133;
+$color: #fff;
+$arrowSize: 5px;
+
+#{$prefixCls}{
+    display: inline-block;
+}
+
+#{$prefixCls}-popper{
+    position: absolute;
+    display: block;
+    font-size: 12px;
+    line-height: 1.5;
+    visibility: visible;
+
+    &[x-placement^=top]{
+        padding: 5px 0 8px;
+    }
+    
+}

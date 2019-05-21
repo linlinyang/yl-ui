@@ -3,6 +3,8 @@
         :class="classes"
         @mouseenter="handlerMouseEnter"
         @mouseleave="handlerMouseLeave"
+        @touchstart='handlerMouseEnter'
+        @touchend='handlerMouseLeave'
     >
         <div :class="[prefixCls + '-ref']" ref="reference">
             <slot></slot>
