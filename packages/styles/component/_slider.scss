@@ -1,10 +1,11 @@
 $prefixCls: '.yl-ui-slider';
 
 $sliderBackColor: #e8eaec;
-$sliderActiveColor: #57a3f3;
+$sliderSelectColor: #57a3f3;
+$thumbActiveColor: #2d8cf0;
 $dotColor: #ccc;
 $barHeight: 4px;
-$thumbSize: 20px;
+$thumbSize: 8px;
 $dotSize: 4px;
 
 #{$prefixCls}{
@@ -22,5 +23,22 @@ $dotSize: 4px;
         @include size($dotSize,$barHeight);
         background-color: $dotColor;
         cursor: pointer;
+    }
+
+    &-wrap{
+        position: absolute;
+        @include size($thumbSize,$thumbSize);
+        cursor: pointer;
+        user-select: none;
+
+        &:hover{
+            cursor: grab;
+        }
+
+        #{$prefixCls}-thumb{
+            @include size($thumbSize,$thumbSize);
+            border-radius: 50%;
+            border: 2px solid $sliderSelectColor;
+        }
     }
 }

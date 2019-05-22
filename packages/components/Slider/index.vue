@@ -16,17 +16,29 @@
             ></div>
         </template>
 
-        <div :class="thumbCls"></div>
+        <div :class="thumbCls">
+            <Tooltip 
+                :content='currentValue'
+                v-for="(thumb,key) in thumbs"
+                :key='key'
+            >
+                <template>
+                    <div :class="prefixCls + '-thumb'"></div>
+                </template>
+            </Tooltip>
+        </div>
 
     </div>
 </template>
 
 <script>
+import Tooltip from '#c/Tooltip/';
 
 const prefixCls = 'yl-ui-slider';
 
 export default {
     name: 'Slider',
+    components: {Tooltip},
     props: {
         value: {
             type: [Number,Array],
@@ -78,6 +90,7 @@ export default {
     },
     data(){
         return {
+            prefixCls,
             currentValue: this.value
         }
     },
@@ -94,7 +107,7 @@ export default {
         },
         thumbCls(){
             return [
-                `${prefixCls}-button-wrap`
+                `${prefixCls}-wrap`
             ];
         },
         rangeValue(){
@@ -108,6 +121,9 @@ export default {
                 dotsRet.push(dotWidth * i + '%');
             }
             return dotsRet;
+        },
+        thumbs(){
+            return Array.isArray(this.value) ? this.value : [].concat(this.value);
         },
         stopClasses(){
             return [

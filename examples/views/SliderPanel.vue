@@ -51,7 +51,6 @@ export default {
             display: flex;
             flex-flow: row nowrap;
             width: 100%;
-            overflow: hidden;
             margin-top: 10px;
             align-items: center;
 
