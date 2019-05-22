@@ -56,7 +56,7 @@ export default {
             align-items: center;
 
             .label{
-                width: 30%;
+                width: 20%;
                 text-align: right;
             }
             .yl-ui-slider{
