@@ -29,8 +29,6 @@
 
 <script>
 import popper from '#/mixins/popper.js';
-import { clearTimeout, setTimeout } from 'timers';
-import { delay } from 'q';
 
 const prefixCls = 'yl-ui-tooltip';
 
