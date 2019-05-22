@@ -1,8 +1,10 @@
 $prefixCls: '.yl-ui-tooltip';
 
-$backColor: #303133;
+$backColor: #464c5b;
 $color: #fff;
 $arrowSize: 5px;
+$verticalSpace: 8px;
+$horizontalSpace: 16px;
 
 #{$prefixCls}{
     display: inline-block;
@@ -15,8 +17,140 @@ $arrowSize: 5px;
     line-height: 1.5;
     visibility: visible;
 
-    &[x-placement^=top]{
-        padding: 5px 0 8px;
+    #{$prefixCls}-inner{
+        box-shadow: 0 1px 6px rgba(0,0,0,.2);
+        padding: 8px 12px;
+        color: #fff;
+        background-color: $backColor;
+        border-radius: 4px;
+        white-space: nowrap;
+
+        &-with-width{
+            white-space: pre-wrap;
+            text-align: justify;
+        }
     }
-    
+
+    #{$prefixCls}-arrow{
+        @include size(0,0);
+        position: absolute;
+        border-style: solid;
+        border-color: transparent;
+    }
+
+    &[x-placement^=top]{
+        padding: $arrowSize 0 ($arrowSize + 3);
+
+        #{$prefixCls}-arrow{
+            border-width: $arrowSize $arrowSize 0 $arrowSize;
+            border-top-color: $backColor;
+            bottom: 3px;
+        }
+    }
+
+    &[x-placement=top-start]{
+        #{$prefixCls}-arrow{
+            left: $horizontalSpace;
+        }
+    }
+
+    &[x-placement=top]{
+        #{$prefixCls}-arrow{
+            left: 50%;
+            margin-left: -$arrowSize / 2;
+        }
+    }
+
+    &[x-placement=top-end]{
+        #{$prefixCls}-arrow{
+            right: $horizontalSpace;
+        }
+    }
+
+    &[x-placement^=left]{
+        padding: 0 ($arrowSize + 3) 0 $arrowSize;
+
+        #{$prefixCls}-arrow{
+            border-width: $arrowSize 0 $arrowSize $arrowSize;
+            border-left-color: $backColor;
+            right: 3px;
+        }
+    }
+
+    &[x-placement=left-start]{
+        #{$prefixCls}-arrow{
+            top: $verticalSpace;
+        }
+    }
+
+    &[x-placement=left]{
+        #{$prefixCls}-arrow{
+            top: 50%;
+            margin-top: -$arrowSize / 2;
+        }
+    }
+
+    &[x-placement=left-end]{
+        #{$prefixCls}-arrow{
+            bottom: $verticalSpace;
+        }
+    }
+
+    &[x-placement^=bottom]{
+        padding: ($arrowSize + 3) 0 $arrowSize 0;
+
+        #{$prefixCls}-arrow{
+            border-width: 0 $arrowSize $arrowSize $arrowSize;
+            border-bottom-color: $backColor;
+            top: 3px;
+        }
+    }
+
+    &[x-placement=bottom-start]{
+        #{$prefixCls}-arrow{
+            left: $verticalSpace;
+        }
+    }
+
+    &[x-placement=bottom]{
+        #{$prefixCls}-arrow{
+            left: 50%;
+            margin-left: -$arrowSize / 2;
+        }
+    }
+
+    &[x-placement=bottom-end]{
+        #{$prefixCls}-arrow{
+            right: $horizontalSpace;
+        }
+    }
+
+    &[x-placement^=right]{
+        padding: 0 $arrowSize 0 ($arrowSize + 3);
+
+        #{$prefixCls}-arrow{
+            border-width: $arrowSize $arrowSize $arrowSize 0;
+            border-right-color: $backColor;
+            left: 3px;
+        }
+    }
+
+    &[x-placement=right-start]{
+        #{$prefixCls}-arrow{
+            top: $verticalSpace;
+        }
+    }
+
+    &[x-placement=right]{
+        #{$prefixCls}-arrow{
+            top: 50%;
+            margin-top: -$arrowSize / 2;
+        }
+    }
+
+    &[x-placement=right-end]{
+        #{$prefixCls}-arrow{
+            bottom: $verticalSpace;
+        }
+    }
 }

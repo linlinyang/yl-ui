@@ -12,12 +12,14 @@
         <transition name="fade">
             <div 
                 :class="[prefixCls + '-popper']"
-                :style='popperStyle'
                 ref='popper'
                 v-show='!disabled && (visiable || always)'
             >
                 <div :class="[prefixCls + '-arrow']"></div>
-                <div :class="innerClassed">
+                <div 
+                    :class="innerClassed"
+                    :style='popperStyle'
+                >
                     <slot name="content">{{ content }}</slot>
                 </div>
             </div>
@@ -27,6 +29,8 @@
 
 <script>
 import popper from '#/mixins/popper.js';
+import { clearTimeout, setTimeout } from 'timers';
+import { delay } from 'q';
 
 const prefixCls = 'yl-ui-tooltip';
 
@@ -49,20 +53,16 @@ export default {
         maxWidth:{
             type: [Number,String]
         },
-        placement: {
-            validator(val){
-                if(typeof val !== 'string'){
-                    return false;
-                }
-                return /^(top|left|bottom|right)(-start|-end)?$/.test(val);
-            },
-            default: 'top'
+        delay: {
+            type: Number,
+            default: 0
         }
     },
     data(){
         return {
             prefixCls,
-            visiable: false
+            visiable: false,
+            delayTimer: null
         };
     },
     computed: {
@@ -72,7 +72,11 @@ export default {
             ];
         },
         popperStyle(){
-            return {};
+            let styles = {};
+            if(this.maxWidth){
+                styles['max-width'] = `${this.maxWidth}px`;
+            }
+            return styles;
         },
         innerClassed(){
             return [
@@ -85,10 +89,21 @@ export default {
     },
     methods: {
         handlerMouseEnter(){
-            this.visiable = true;
+            if(this.delayTimer){
+                clearTimeout(this.delayTimer);
+            }
+            
+            this.delayTimer = setTimeout(() => {
+                this.visiable = true;
+            },this.delay);
         },
         handlerMouseLeave(){
-            this.visiable = false;
+            if(this.delayTimer){
+                clearTimeout(this.delayTimer);
+                this.delayTimer = setTimeout(() => {
+                    this.visiable = false;
+                },100);
+            }
         }
     }
 }
