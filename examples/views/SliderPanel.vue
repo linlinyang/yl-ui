@@ -42,6 +42,12 @@
             <Slider :step=10 :value=40 ></Slider>
         </div>
 
+        <div class="row">
+            <div class="label">v-model：</div>
+            <Slider showStops :step=10 v-model="selectVal"></Slider>
+            <Input :value="selectVal"></Input>
+        </div>
+
     </div>
 
 </div>
@@ -50,17 +56,20 @@
 <script>
 import Header from '@/components/Header/';
 import Slider from '#c/Slider/';
+import Input from '#c/Input/';
 
 export default {
     name: 'SliderPanel',
     data(){
         return {
-            switchVal: 0
+            switchVal: 0,
+            selectVal: 50
         };
     },
     components: {
         Header,
-        Slider
+        Slider,
+        Input
     },
     methods: {
         tipFormat(val,index){
