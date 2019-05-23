@@ -3,7 +3,6 @@
         :class='classes'
         ref='slider'
     >
-
         <input 
             type="hidden" 
             :name="name"
@@ -12,7 +11,7 @@
 
         <template v-if="showStops">
             <div 
-                :class="stopClasses"
+                :class="prefixCls + '-stop'"
                 v-for="(val,index) in stops"
                 :style="{ left: val}"
                 :key='index'
@@ -32,9 +31,12 @@
             @touchstart="beginDrag($event,thumb.index)"
         >
             <Tooltip 
-                :content='thumb.val'
+                :content='thumb.value'
                 placement='top'
-                offset='0,5px'
+                :disabled="disabledTips"
+                :always="alwaysShowTips(thumb.index)"
+                ref='tooltip'
+                :offset='offset'
             >
                 <template>
                     <div 
@@ -73,10 +75,6 @@ export default {
             type: Number,
             default: 1
         },
-        range: {
-            type: Boolean,
-            default: false
-        },
         disabled: {
             type: Boolean,
             default: false
@@ -97,24 +95,23 @@ export default {
                 return val;
             }
         },
-        size: {
-            validator(val){
-                return ['default','small','mini'].includes(val);
-            },
-            default: 'default'
+        offset: {
+            type: [Number,String],
+            default: '0,5px'
         },
         name: String
     },
     data(){
         return {
             prefixCls,
-            isDragging: false,
-            startX: 0,
-            sliderWidth: 0,
-            thumbIndex: 0,
-            startValue: 0,
-            currentValue: Array.isArray(this.value) ? this.value : [].concat(this.value),
-            rangeValue: this.max - this.min
+            isDragging: false,//是否开始拖拽
+            startX: 0,//点击滑块是水平X位置
+            sliderWidth: 0,//整个滑块的水平宽度
+            thumbIndex: 0,//选中的滑块的index
+            startValue: 0,//开始拖拽时的值
+            currentValue: Array.isArray(this.value) ? this.value : [].concat(this.value),//当前滑块的值
+            oldValue: 0,
+            rangeValue: this.max - this.min,//取值区间
         }
     },
     computed: {
@@ -138,80 +135,105 @@ export default {
                 ];
             };
         },
-        dotWidth(){
+        alwaysShowTips(){
+            return (index) => {
+                return this.showTip === 'always' || (index === this.thumbIndex && this.isDragging);
+            };
+        },
+        disabledTips(){
+            return this.showTip === 'never';
+        },
+        stopRadio(){
             return 100 * this.step / this.rangeValue;
         },
-        stops(){
+        stops(){//生成间断点
             const dotsNum = this.rangeValue / this.step;
             const dotsRet = [];
 
             for(let i = 1; i < dotsNum; i++){
-                dotsRet.push(this.dotWidth * i + '%');
+                dotsRet.push(this.stopRadio * i + '%');
             }
             return dotsRet;
         },
-        thumbs(){
-            let ret = [];
-            
-            this.currentValue.forEach((val,index) => {
-                ret.push({
+        thumbs(){//生成滑块
+            return this.currentValue.reduce((ret,value,index) => {
+                return ret.concat([{
+                    value: this.tipFormat(value,index),
                     index,
-                    val,
-                    left: (val / this.step) * this.dotWidth
-                });
-            });
-            return ret;
+                    left: ( value / this.step ) * this.stopRadio
+                }]);
+            },[]);
         },
-        barStyles(){
-            const styles = Object.create(null);
-
+        barStyles(){//根据滑块的位置设置选中条的宽度和起点
             const begin = this.currentValue.length > 1 ? this.currentValue[0] : 0;
             const end = this.currentValue[this.currentValue.length - 1];
             
             return {
-                width: ((end - begin) / this.step) * this.dotWidth + '%',
-                left: (begin / this.step) * this.dotWidth + '%'
+                width: ((end - begin) / this.step) * this.stopRadio + '%',
+                left: (begin / this.step) * this.stopRadio + '%'
             };
-        },
-        stopClasses(){
-            return [
-                `${prefixCls}-stop`
-            ];
         }
     },
     methods: {
+        getEvent(e){
+            return e.changedTouches ? e.changedTouches[0] : e;
+        },
         beginDrag(e,index){
             if(this.isDragging){
                 return ;
             }
+            e = this.getEvent(e);
             this.isDragging = true;
             const bounding = this.$refs.slider.getBoundingClientRect();
             this.startX = e.clientX;
             this.sliderWidth = bounding.width;
             this.thumbIndex = index;
-            this.startValue = this.currentValue[index];
+            this.oldValue = this.startValue = this.currentValue[index];
         },
         dragging(e){
             if(!this.isDragging){
                 return ;
             }
+            e = this.getEvent(e);
             const curX = e.clientX;
-            
             const stepWidth = (this.step / this.rangeValue) * this.sliderWidth;
+            const curVal = Math.round((curX - this.startX) / stepWidth) * this.step + this.startValue;
+            
+            if(curVal < this.min || curVal > this.max || curVal === this.oldValue){
+                return ;
+            }
 
-            const distanceStep = Math.round((curX - this.startX) / stepWidth) * this.step;
-            this.$set(this.currentValue,this.thumbIndex,this.startValue + distanceStep);
+            this.updateThumbs(curVal,this.thumbIndex);   
         },
         endDrag(){
             if(!this.isDragging){
                 return ;
             }
             this.isDragging = false;
+        },
+        updateThumbs(val,index){//更新thumb位置
+            this.oldValue = val;
+            for(let i = 0; i < index; i++){
+                let tempVal = this.currentValue[i];
+                if(tempVal > val){
+                    this.$set(this.currentValue,i,val);
+                }
+            }
+            this.$set(this.currentValue,index,val);
+        },
+        updateToolTips(){
+            this.$refs.tooltip.forEach((curTip) => {
+                curTip.updatePopper();
+            });
+        }
+    },
+    watch: {
+        currentValue(val){
+            this.$emit('change',val.length > 1 ? val : val[0]);
         }
     },
     mounted(){
-        //this.$set(this.currentValue,0,10);
-
+        this.updateToolTips();
         on(window,'mousemove',this.dragging);
         on(window,'touchmove',this.dragging);
         on(window,'touchend',this.endDrag);

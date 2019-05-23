@@ -18,8 +18,28 @@
         </div>
 
         <div class="row">
-            <div class="label">默认：</div>
-            <Slider showStops :step=20 :value=[40,80]></Slider>
+            <div class="label">双滑块：</div>
+            <Slider showStops :step=10 :value=[30,60]></Slider>
+        </div>
+
+        <div class="row">
+            <div class="label">不显示提示：</div>
+            <Slider showStops :step=10 :value=40 showTip='never'></Slider>
+        </div>
+
+        <div class="row">
+            <div class="label">一直显示提示：</div>
+            <Slider showStops :step=10 :value=20 showTip='always'></Slider>
+        </div>
+
+        <div class="row">
+            <div class="label">自定义提示：</div>
+            <Slider showStops :step=10 :value=40 :tipFormat="tipFormat" ></Slider>
+        </div>
+
+        <div class="row">
+            <div class="label">不显示间断点</div>
+            <Slider :step=10 :value=40 ></Slider>
         </div>
 
     </div>
@@ -41,6 +61,11 @@ export default {
     components: {
         Header,
         Slider
+    },
+    methods: {
+        tipFormat(val,index){
+            return '百分比值：' + ((val / (100 - 0)) * 100) + '%';
+        }
     }
 }
 </script>
@@ -57,7 +82,7 @@ export default {
             display: flex;
             flex-flow: row nowrap;
             width: 100%;
-            margin-top: 10px;
+            margin-top: 20px;
             align-items: center;
 
             .label{
