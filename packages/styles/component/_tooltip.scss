@@ -7,7 +7,7 @@ $verticalSpace: 8px;
 $horizontalSpace: 16px;
 
 #{$prefixCls}{
-    display: inline-block;
+    position: relative;
 }
 
 #{$prefixCls}-popper{
@@ -57,7 +57,7 @@ $horizontalSpace: 16px;
     &[x-placement=top]{
         #{$prefixCls}-arrow{
             left: 50%;
-            margin-left: -$arrowSize / 2;
+            margin-left: -$arrowSize;
         }
     }
 
@@ -86,7 +86,7 @@ $horizontalSpace: 16px;
     &[x-placement=left]{
         #{$prefixCls}-arrow{
             top: 50%;
-            margin-top: -$arrowSize / 2;
+            margin-top: -$arrowSize;
         }
     }
 
@@ -115,7 +115,7 @@ $horizontalSpace: 16px;
     &[x-placement=bottom]{
         #{$prefixCls}-arrow{
             left: 50%;
-            margin-left: -$arrowSize / 2;
+            margin-left: -$arrowSize;
         }
     }
 
@@ -144,7 +144,7 @@ $horizontalSpace: 16px;
     &[x-placement=right]{
         #{$prefixCls}-arrow{
             top: 50%;
-            margin-top: -$arrowSize / 2;
+            margin-top: -$arrowSize;
         }
     }
 

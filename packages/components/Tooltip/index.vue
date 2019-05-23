@@ -1,8 +1,8 @@
 <template>
     <div 
         :class="classes"
-        @mouseenter="handlerMouseEnter"
-        @mouseleave="handlerMouseLeave"
+        @mouseenter="handlerMouseEnter($event)"
+        @mouseleave="handlerMouseLeave($event)"
         @touchstart='handlerMouseEnter'
         @touchend='handlerMouseLeave'
     >

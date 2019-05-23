@@ -1,17 +1,24 @@
 $prefixCls: '.yl-ui-slider';
 
 $sliderBackColor: #e8eaec;
-$sliderSelectColor: #57a3f3;
-$thumbActiveColor: #2d8cf0;
+$sliderHeight: 4px;
+
 $dotColor: #ccc;
-$barHeight: 4px;
-$thumbSize: 8px;
-$dotSize: 4px;
+$dotWidth: 4px;
+
+$barBackColor: #57a3f3;
+
+$thumbSize: 10px;
+$thumbBackColor: #fff;
+$thumbBorderColor: #57a3f3;
+$thumbBorderWidth: 2px;
+$thumbBorderActiveColor: #2d8cf0;
+$thumbActiveScale: 1.5;
 
 #{$prefixCls}{
     display: inline-block;
     width: 100%;
-    height: $barHeight;
+    height: $sliderHeight;
     background-color: $sliderBackColor;
     border-radius: 2px;
     position: relative;
@@ -20,15 +27,24 @@ $dotSize: 4px;
 
     &-stop{
         @include pos();
-        @include size($dotSize,$barHeight);
+        @include size($dotWidth,$sliderHeight);
         background-color: $dotColor;
         cursor: pointer;
     }
 
+    &-bar{
+        background-color: $barBackColor;
+        height: $sliderHeight;
+        position: absolute;
+        top: 0;
+    }
+
     &-wrap{
         position: absolute;
-        @include size($thumbSize,$thumbSize);
+        top: - ($thumbSize - $sliderHeight + $thumbBorderWidth * 2) / 2;
+        margin-left: - ($thumbSize / 2);
         cursor: pointer;
+        @include size($thumbSize + $thumbBorderWidth * 2,$thumbSize + $thumbBorderWidth * 2);
         user-select: none;
 
         &:hover{
@@ -38,7 +54,14 @@ $dotSize: 4px;
         #{$prefixCls}-thumb{
             @include size($thumbSize,$thumbSize);
             border-radius: 50%;
-            border: 2px solid $sliderSelectColor;
+            background-color: $thumbBackColor;
+            border: $thumbBorderWidth solid $thumbBorderColor;
+            transition: transform 0.2s ease-in-out;
+
+            &-active,&:hover{
+                transform: scale($thumbActiveScale,$thumbActiveScale);
+                border-color: $thumbBorderActiveColor;
+            }
         }
     }
 }

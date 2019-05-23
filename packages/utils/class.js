@@ -1,4 +1,4 @@
-import { win,doc } from './base';
+import { win,doc } from './variable';
 
 let tempDiv = doc.createElement('div');
 const hasClassList = 'classList' in tempDiv;//是否支持classList API，IE9+

@@ -14,8 +14,14 @@
 
         <div class="row">
             <div class="label">默认：</div>
-            <Slider showStops :step=10 ></Slider>
+            <Slider showStops :step=10 :value=50></Slider>
         </div>
+
+        <div class="row">
+            <div class="label">默认：</div>
+            <Slider showStops :step=20 :value=[40,80]></Slider>
+        </div>
+
     </div>
 
 </div>

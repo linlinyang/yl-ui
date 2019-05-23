@@ -1,5 +1,8 @@
 <template>
-    <div :class='classes'>
+    <div 
+        :class='classes'
+        ref='slider'
+    >
 
         <input 
             type="hidden" 
@@ -16,14 +19,27 @@
             ></div>
         </template>
 
-        <div :class="thumbCls">
+        <div 
+            :class="prefixCls + '-bar'"
+            :style="barStyles"
+        ></div>
+
+        <div :class="prefixCls + '-wrap'"
+            v-for="(thumb,tindex) in thumbs"
+            :key="'thumb' + tindex"
+            :style="{left: thumb.left + '%'}"
+            @mousedown="beginDrag($event,thumb.index)"
+            @touchstart="beginDrag($event,thumb.index)"
+        >
             <Tooltip 
-                :content='currentValue'
-                v-for="(thumb,key) in thumbs"
-                :key='key'
+                :content='thumb.val'
+                placement='top'
+                offset='0,5px'
             >
                 <template>
-                    <div :class="prefixCls + '-thumb'"></div>
+                    <div 
+                        :class="thumbCls(thumb.index)"
+                    ></div>
                 </template>
             </Tooltip>
         </div>
@@ -33,6 +49,7 @@
 
 <script>
 import Tooltip from '#c/Tooltip/';
+import {on,off} from '#/utils/dom';
 
 const prefixCls = 'yl-ui-slider';
 
@@ -91,7 +108,13 @@ export default {
     data(){
         return {
             prefixCls,
-            currentValue: this.value
+            isDragging: false,
+            startX: 0,
+            sliderWidth: 0,
+            thumbIndex: 0,
+            startValue: 0,
+            currentValue: Array.isArray(this.value) ? this.value : [].concat(this.value),
+            rangeValue: this.max - this.min
         }
     },
     computed: {
@@ -106,30 +129,99 @@ export default {
             ];
         },
         thumbCls(){
-            return [
-                `${prefixCls}-wrap`
-            ];
+            return (index) => {
+                return [
+                    `${prefixCls}-thumb`,
+                    {
+                        [`${prefixCls}-thumb-active`]: this.thumbIndex == index && this.isDragging
+                    }
+                ];
+            };
         },
-        rangeValue(){
-            return this.max - this.min;
+        dotWidth(){
+            return 100 * this.step / this.rangeValue;
         },
         stops(){
             const dotsNum = this.rangeValue / this.step;
-            const dotWidth = 100 * this.step / this.rangeValue;
             const dotsRet = [];
+
             for(let i = 1; i < dotsNum; i++){
-                dotsRet.push(dotWidth * i + '%');
+                dotsRet.push(this.dotWidth * i + '%');
             }
             return dotsRet;
         },
         thumbs(){
-            return Array.isArray(this.value) ? this.value : [].concat(this.value);
+            let ret = [];
+            
+            this.currentValue.forEach((val,index) => {
+                ret.push({
+                    index,
+                    val,
+                    left: (val / this.step) * this.dotWidth
+                });
+            });
+            return ret;
+        },
+        barStyles(){
+            const styles = Object.create(null);
+
+            const begin = this.currentValue.length > 1 ? this.currentValue[0] : 0;
+            const end = this.currentValue[this.currentValue.length - 1];
+            
+            return {
+                width: ((end - begin) / this.step) * this.dotWidth + '%',
+                left: (begin / this.step) * this.dotWidth + '%'
+            };
         },
         stopClasses(){
             return [
                 `${prefixCls}-stop`
             ];
         }
+    },
+    methods: {
+        beginDrag(e,index){
+            if(this.isDragging){
+                return ;
+            }
+            this.isDragging = true;
+            const bounding = this.$refs.slider.getBoundingClientRect();
+            this.startX = e.clientX;
+            this.sliderWidth = bounding.width;
+            this.thumbIndex = index;
+            this.startValue = this.currentValue[index];
+        },
+        dragging(e){
+            if(!this.isDragging){
+                return ;
+            }
+            const curX = e.clientX;
+            
+            const stepWidth = (this.step / this.rangeValue) * this.sliderWidth;
+
+            const distanceStep = Math.round((curX - this.startX) / stepWidth) * this.step;
+            this.$set(this.currentValue,this.thumbIndex,this.startValue + distanceStep);
+        },
+        endDrag(){
+            if(!this.isDragging){
+                return ;
+            }
+            this.isDragging = false;
+        }
+    },
+    mounted(){
+        //this.$set(this.currentValue,0,10);
+
+        on(window,'mousemove',this.dragging);
+        on(window,'touchmove',this.dragging);
+        on(window,'touchend',this.endDrag);
+        on(window,'mouseup',this.endDrag);
+    },
+    destroyed(){
+        off(window,'mousemove',this.dragging);
+        off(window,'touchmove',this.dragging);
+        off(window,'touchend',this.endDrag);
+        off(window,'mouseup',this.endDrag);
     }
 }
 </script>
