@@ -52,6 +52,7 @@
 <script>
 import Tooltip from '#c/Tooltip/';
 import {on,off} from '#/utils/dom';
+import {indexOf} from '#/utils/tool';
 
 const prefixCls = 'yl-ui-slider';
 
@@ -60,7 +61,7 @@ export default {
     components: {Tooltip},
     props: {
         value: {
-            type: [Number,Array],
+            type: [Number,Array,String],
             default: 0
         },
         max: {
@@ -105,11 +106,11 @@ export default {
         return {
             prefixCls,
             isDragging: false,//是否开始拖拽
-            startX: 0,//点击滑块是水平X位置
+            startX: 0,//点击滑块时水平X位置
             sliderWidth: 0,//整个滑块的水平宽度
             thumbIndex: 0,//选中的滑块的index
             startValue: 0,//开始拖拽时的值
-            currentValue: Array.isArray(this.value) ? this.value : [].concat(this.value),//当前滑块的值
+            currentValue: this.checkValue(this.value),//当前滑块拖拽点数组
             oldValue: 0,
             rangeValue: this.max - this.min,//取值区间
         }
@@ -165,9 +166,9 @@ export default {
             },[]);
         },
         barStyles(){//根据滑块的位置设置选中条的宽度和起点
-            const begin = this.currentValue.length > 1 ? this.currentValue[0] : 0;
-            const end = this.currentValue[this.currentValue.length - 1];
-            
+            let begin = this.currentValue.length > 1 ? this.currentValue[0] : 0;
+            let end = this.currentValue[this.currentValue.length - 1];
+
             return {
                 width: ((end - begin) / this.step) * this.stopRadio + '%',
                 left: (begin / this.step) * this.stopRadio + '%'
@@ -175,6 +176,36 @@ export default {
         }
     },
     methods: {
+        checkValue(originVal){//检测输入的值，保证在min和max之间的数字
+            let ret;
+            switch(indexOf(originVal)){
+                case 'number':
+                    ret = [this.limitValue(originVal)];
+                    break;
+
+                case 'string':
+                    if(isNaN(Number(originVal))){
+                        let intVal = parseInt(originVal);
+                        let floatVal = parseFloat(originVal);
+                        ret = [this.limitValue(intVal === floatVal ? intVal : floatVal)];
+                    }else{
+                        ret = [this.limitValue(Number(originVal))];
+                    }
+                    break;
+
+                case 'array':
+                    ret = originVal.reduce((retVal,val) => retVal.concat(this.checkValue(val)),[]);
+                    break;
+
+                default :
+                    ret = originVal;
+            }
+
+            return ret;
+        },
+        limitValue(val){
+            return Math.max(Math.min(val,this.max),this.min);
+        },
         getEvent(e){
             return e.changedTouches ? e.changedTouches[0] : e;
         },
@@ -188,7 +219,7 @@ export default {
             this.startX = e.clientX;
             this.sliderWidth = bounding.width;
             this.thumbIndex = index;
-            this.oldValue = this.startValue = this.currentValue[index];
+            this.oldValue = this.startValue = Number(this.currentValue[index]);
         },
         dragging(e){
             if(!this.isDragging){
@@ -214,7 +245,7 @@ export default {
         updateThumbs(val,index){//更新thumb位置
             this.oldValue = val;
             for(let i = 0; i < index; i++){
-                let tempVal = this.currentValue[i];
+                let tempVal = Number(this.currentValue[i]);
                 if(tempVal > val){
                     this.$set(this.currentValue,i,val);
                 }
@@ -229,7 +260,12 @@ export default {
     },
     watch: {
         currentValue(val){
-            this.$emit('change',val.length > 1 ? val : val[0]);
+            const retVal = val.length > 1 ? val : val[0];
+            this.$emit('change',retVal);
+            this.$emit('input',retVal);
+        },
+        value(newVal){
+            this.currentValue = this.checkValue(newVal);
         }
     },
     mounted(){

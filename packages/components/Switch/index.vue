@@ -78,6 +78,11 @@ export default {
     watch: {
         checked(val){
             this.setBackgroundColor();
+        },
+        value(newVal){
+            if(this.currentValue !== this.value){
+                this.currentValue = this.value;
+            }
         }
     },
     methods:{

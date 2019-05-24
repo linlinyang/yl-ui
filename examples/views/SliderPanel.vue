@@ -38,14 +38,18 @@
         </div>
 
         <div class="row">
-            <div class="label">不显示间断点</div>
+            <div class="label">不显示停顿点：</div>
             <Slider :step=10 :value=40 ></Slider>
         </div>
 
         <div class="row">
-            <div class="label">v-model：</div>
-            <Slider showStops :step=10 v-model="selectVal"></Slider>
-            <Input :value="selectVal"></Input>
+            <div class="label">v-model双向绑定：</div>
+            <Slider 
+                showStops 
+                :step=10 
+                v-model="selectVal"
+            ></Slider>
+            <Input v-model="selectVal"></Input>
         </div>
 
     </div>
@@ -63,7 +67,8 @@ export default {
     data(){
         return {
             switchVal: 0,
-            selectVal: 50
+            selectVal: 50,
+            dblSelectVal: [20,60]
         };
     },
     components: {
@@ -97,6 +102,7 @@ export default {
             .label{
                 width: 20%;
                 text-align: right;
+                flex-shrink: 0;
             }
             .yl-ui-slider{
                 margin-left: 20px;

@@ -143,6 +143,13 @@ export default {
             ];
         }
     },
+    watch: {
+        value(newVal){
+            if(this.currentValue !== newVal){
+                this.currentValue = newVal;
+            }
+        }
+    },
     methods: {
         focus(){
             this.$refs.input.focus();
