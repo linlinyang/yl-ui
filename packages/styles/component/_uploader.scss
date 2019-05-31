@@ -1,0 +1,87 @@
+$prefixCls: '.yl-ui-uploader';
+
+$defaultWidth: 150px;
+$defaultHeight: 150px;
+$smallWidth: 100px;
+$smallHeight: 100px;
+$miniWidth: 100px;
+$miniHeight: 100px;
+$backColor: #ededed;
+$addBorderColor: #a3a3a3;
+
+#{$prefixCls}{
+    position: relative;
+    overflow: hidden;
+    
+    &-preview{
+        position: relative;
+        overflow: hidden;
+        padding: 0 15px;
+
+        &-item{
+            overflow: hidden;
+            display: inline-block;
+            @include size($defaultWidth,$defaultHeight,$defaultHeight);
+            margin: 15px 15px 0 0;
+            cursor: pointer;
+            background-color: $backColor;
+
+            img{
+                width: 100%;
+                vertical-align: middle;
+            }
+
+        }
+
+        &-add{
+            position: relative;
+            display: inline-block;
+            @include size($defaultWidth,$defaultHeight);
+            margin: 15px 15px 0 0;
+            cursor: pointer;
+            z-index: 1;
+            background-color: $backColor;
+
+            input{
+                @include size(100%,100%);
+                display: block;
+                @include pos();
+                opacity: 0;
+                z-index: 2;
+                cursor: pointer;
+                -webkit-tap-highlight-color: rgba(0,0,0,0);
+            }
+
+            &:before{
+                content: '';
+                @include pos(absolute,50%,35%);
+                @include size(30%,0);
+                border-top: 1px solid $addBorderColor;
+                margin-top: -0.5px;
+            }
+            &:after{
+                content: '';
+                @include pos(absolute,35%,50%);
+                @include size(0,30%);
+                border-left: 1px solid $addBorderColor;
+                margin-left: -0.5px;
+            }
+        }
+
+    }
+}
+
+$sizes: 'small' 'mini';
+@each $type in $sizes {
+    $width: #{$type}Width;
+    $height: #{$type}Height;
+    #{$prefixCls}-preview-#{$type}{
+        @include size($width,$height,$height);
+    }
+}
+
+#{$prefixCls}-preview-disabled{
+    #{$prefixCls}-preview-item{
+        cursor: not-allowed;
+    }
+}

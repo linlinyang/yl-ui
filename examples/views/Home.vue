@@ -79,6 +79,9 @@ export default {
 			},{
 				name: 'Slider',
 				link: '#/Slider'
+			},{
+				name: 'UploadImg',
+				link: '#/UploadImg'
 			}],
 			handleList: [{
 				name: 'Tooltip',
