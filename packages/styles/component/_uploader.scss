@@ -69,6 +69,11 @@ $addBorderColor: #a3a3a3;
         }
 
     }
+
+    &-cropper{
+        @include size(100%,100%);
+        @include pos(fixed,0,0);
+    }
 }
 
 $sizes: 'small' 'mini';

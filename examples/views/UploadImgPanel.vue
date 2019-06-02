@@ -6,7 +6,7 @@
 			<p>Upload image</p>
 		</template>
 		<template #body>
-			<p>图片上传预览裁剪压缩</p>
+			<p>图片上传预览裁剪压缩（用户选择图片上传功能兼容ie10+）</p>
 		</template>
     </Header>
 

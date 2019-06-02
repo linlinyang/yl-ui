@@ -5,7 +5,7 @@
 
         <div :class='prefixCls + "-preview"'>
             <div 
-                :class='prefixCls + "-preview-item"'
+                :class='previewItemCls'
                 v-for='(val,index) in currentValue'
                 :key='index'
             >
@@ -28,6 +28,7 @@
 
         <div 
             :class='cropperCls'
+            :id='uniqueCropperId'
             v-show='isCropping'
         ></div>
 
@@ -37,10 +38,11 @@
 <script>
 import JSCropper from '@yanglinlin/js_cropper';
 import {on,off} from '#/utils/dom';
-
+console.log(JSCropper);
 const prefixCls = 'yl-ui-uploader';
 const rootEl = document.documentElement || document.body;
 let uid = 1;
+const now = "" + +new Date();
 
 export default {
     name: 'UploadImg',
@@ -51,7 +53,7 @@ export default {
         },
         name: {
             type: String,
-            default: `uploader_${+new Date()}_${++uid}`
+            default: `uploader_${now}_${++uid}`
         },
         max: {
             type: Number,
@@ -66,6 +68,10 @@ export default {
         disabled: {
             type: Boolean,
             default: false
+        },
+        customCls:{
+            type: String,
+            default: ''
         },
         imgType: {
             validator(val){
@@ -93,7 +99,8 @@ export default {
             cHeight: this.height,
             quality: 1,
             img: null,
-            isCropping: false
+            isCropping: false,
+            uniqueCropperId: `cropper-wrap-${now.substr(0,4)}-${++uid}`
         };
     },
     computed: {
@@ -110,6 +117,14 @@ export default {
             return [
                 `${prefixCls}-cropper`
             ];
+        },
+        previewItemCls(){
+            return [
+                `${prefixCls}-preview-item`,
+                {
+                    [`${this.customCls}`]: !!this.customCls
+                }
+            ];
         }
     },
     watch: {
@@ -125,8 +140,18 @@ export default {
 
         },
         selectFile(e){
-            const tagEl = e.target || e.srcElement;
+            let tagEl = e.target || e.srcElement;
             this.isCropping = true;
+            let file = tagEl.files[0];
+            let reader = new FileReader();
+            reader.onload = (e) => {
+                this.img = reader.result;
+                tagEl = file = reader = null;
+                this.$nextTick(() => {
+                    this.cropperUpdate();
+                });
+            }
+            reader.readAsDataURL(file);
         },
         cropperUpdate(){
             const {
@@ -144,8 +169,11 @@ export default {
                 img
             };
             if(!this.jc){
+                console.log(Object.assign({
+                    el: `#${this.uniqueCropperId}`,
+                },options));
                 this.jc = new JSCropper(Object.assign({
-                    el: `${this.cropperCls}`,
+                    el: `#${this.uniqueCropperId}`,
                 },options));
             }else{
                 jc.update(options);
@@ -168,7 +196,7 @@ export default {
     },
     destroyed(){
         off(window,'resize',this.resize);
-        this.jc.destroy();
+        this.jc && this.jc.destroyed();
     }
 }
 </script>
