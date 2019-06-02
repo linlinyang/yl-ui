@@ -30,7 +30,16 @@
             :class='cropperCls'
             :id='uniqueCropperId'
             v-show='isCropping'
-        ></div>
+        >
+            <div :class="prefixCls + '-btns'">
+                <div @click="cut">
+                    <slot name="cut">{{ cutTxt }}</slot>
+                </div>
+                <div @click="cancel">
+                    <slot name="cancel">{{ cancelTxt }}</slot>
+                </div>
+            </div>
+        </div>
 
     </div>
 </template>
@@ -38,7 +47,7 @@
 <script>
 import JSCropper from '@yanglinlin/js_cropper';
 import {on,off} from '#/utils/dom';
-console.log(JSCropper);
+
 const prefixCls = 'yl-ui-uploader';
 const rootEl = document.documentElement || document.body;
 let uid = 1;
@@ -86,6 +95,14 @@ export default {
         height: {
             type: Number,
             default: 300
+        },
+        cutTxt: {
+            type: String,
+            default: '确认'
+        },
+        cancelTxt: {
+            type: String,
+            default: '取消'
         }
     },
     data(){
@@ -183,7 +200,9 @@ export default {
         resize(e){
             this.cropperWidth = Math.max(rootEl.offsetWidth,rootEl.clientWidth);
             this.cropperHeight = Math.max(rootEl.offsetHeight,rootEl.clientHeight);
-        }
+        },
+        cut(){},
+        cancel(){}
     },
     update(){
         this.$nextTick(() => {
@@ -196,7 +215,7 @@ export default {
     },
     destroyed(){
         off(window,'resize',this.resize);
-        this.jc && this.jc.destroyed();
+        this.jc && this.jc.destroy();
     }
 }
 </script>

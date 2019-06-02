@@ -73,6 +73,32 @@ $addBorderColor: #a3a3a3;
     &-cropper{
         @include size(100%,100%);
         @include pos(fixed,0,0);
+        z-index: 99999;
+        background: #fff;
+
+        canvas{
+            @include pos();
+            z-index: 1;
+        }
+
+        #{$prefixCls}-btns{
+            @include pos(absolute,null,0,0);
+            width: 100%;
+            padding: 10px 0;
+            z-index: 10;
+            background-color: #fff;
+
+            &>div{
+                &:first-child{
+                    border-right: 1px solid #333;
+                    margin-left: -1px;
+                }
+                display: inline-block;
+                @include size(50%,40px,40px);
+                text-align: center;
+                cursor: pointer;
+            }
+        }
     }
 }
 
