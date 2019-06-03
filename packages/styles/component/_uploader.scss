@@ -2,12 +2,10 @@ $prefixCls: '.yl-ui-uploader';
 
 $defaultWidth: 150px;
 $defaultHeight: 150px;
-$smallWidth: 100px;
-$smallHeight: 100px;
-$miniWidth: 100px;
-$miniHeight: 100px;
+$defaultGap: 15px;
 $backColor: #ededed;
 $addBorderColor: #a3a3a3;
+
 
 #{$prefixCls}{
     position: relative;
@@ -16,13 +14,12 @@ $addBorderColor: #a3a3a3;
     &-preview{
         position: relative;
         overflow: hidden;
-        padding: 0 15px;
 
         &-item{
             overflow: hidden;
             display: inline-block;
             @include size($defaultWidth,$defaultHeight,$defaultHeight);
-            margin: 15px 15px 0 0;
+            margin: $defaultGap $defaultGap 0 0;
             cursor: pointer;
             background-color: $backColor;
 
@@ -37,7 +34,7 @@ $addBorderColor: #a3a3a3;
             position: relative;
             display: inline-block;
             @include size($defaultWidth,$defaultHeight);
-            margin: 15px 15px 0 0;
+            margin: $defaultGap $defaultGap 0 0;
             cursor: pointer;
             z-index: 1;
             background-color: $backColor;
@@ -84,35 +81,39 @@ $addBorderColor: #a3a3a3;
         #{$prefixCls}-btns{
             @include pos(absolute,null,0,0);
             width: 100%;
+            height: 40px;
             padding: 10px 0;
             z-index: 10;
             background-color: #fff;
+            @include fcw(20px,#333);
+            display: table;
 
             &>div{
-                &:first-child{
-                    border-right: 1px solid #333;
-                    margin-left: -1px;
-                }
-                display: inline-block;
-                @include size(50%,40px,40px);
+                display: table-cell;
+                vertical-align: middle;
                 text-align: center;
                 cursor: pointer;
+                border-right: 1px solid #ccc;
+
+                &:last-child{
+                    border-right: 0
+                }
             }
         }
     }
 }
 
-$sizes: 'small' 'mini';
-@each $type in $sizes {
-    $width: #{$type}Width;
-    $height: #{$type}Height;
-    #{$prefixCls}-preview-#{$type}{
-        @include size($width,$height,$height);
+@media screen and (max-width: 750px){
+    #{$prefixCls}-preview{
+        &-item,&-add{
+            @include size(46%,150px,150px);
+            margin: $defaultGap 4% 0 0;
+        }
     }
 }
 
 #{$prefixCls}-preview-disabled{
-    #{$prefixCls}-preview-item{
+    #{$prefixCls}-preview-item,#{$prefixCls}-preview-add{
         cursor: not-allowed;
     }
 }

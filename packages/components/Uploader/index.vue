@@ -1,26 +1,30 @@
 <template>
-    <div :class='prefixCls'>
+    <div 
+        :class='prefixCls'
+        ref='uploader'
+    >
 
         <input type='hidden' :name='name' :value='currentValue' />
 
-        <div :class='prefixCls + "-preview"'>
+        <div :class='previewCls'>
             <div 
                 :class='previewItemCls'
                 v-for='(val,index) in currentValue'
                 :key='index'
+                @click='previewItem(index,val,$event)'
             >
                 <img 
                     :src='val'
-                    @click='preview(index,val,$event)'
                 />
             </div>
             <div 
-                :class='prefixCls + "-preview-add"'
+                :class='previewAdd'
                 v-if='currentValue.length <= max'
             >
                 <input 
                     type='file' 
                     accept='image/jpeg,image/png,image/jpg' 
+                    ref='file'
                     @change='selectFile'
                 />
             </div>
@@ -32,8 +36,11 @@
             v-show='isCropping'
         >
             <div :class="prefixCls + '-btns'">
-                <div @click="cut">
+                <div @click="cut" v-if='!this.disabled'>
                     <slot name="cut">{{ cutTxt }}</slot>
+                </div>
+                <div @click="deleteItem(deleteIndex)" v-if='deleteIndex !== false || !this.disabled'>
+                    <slot name="remove">{{ deleteTxt }}</slot>
                 </div>
                 <div @click="cancel">
                     <slot name="cancel">{{ cancelTxt }}</slot>
@@ -68,17 +75,15 @@ export default {
             type: Number,
             default: 100
         },
-        size: {
-            validator(val){
-                return ['default','small','min'].includes(val);
-            },
-            default: 'default'
-        },
         disabled: {
             type: Boolean,
             default: false
         },
         customCls:{
+            type: String,
+            default: ''
+        },
+        customAdd: {
             type: String,
             default: ''
         },
@@ -100,6 +105,10 @@ export default {
             type: String,
             default: '确认'
         },
+        deleteTxt: {
+            type: String,
+            default: '删除'
+        },
         cancelTxt: {
             type: String,
             default: '取消'
@@ -117,6 +126,7 @@ export default {
             quality: 1,
             img: null,
             isCropping: false,
+            deleteIndex: false,
             uniqueCropperId: `cropper-wrap-${now.substr(0,4)}-${++uid}`
         };
     },
@@ -125,7 +135,6 @@ export default {
             return [
                 `${prefixCls}-preview`,
                 {
-                    [`${prefixCls}-preview-${this.size}`]: this.size !== 'default',
                     [`${prefixCls}-preview-${this.disabled}`]: this.disabled
                 }
             ];
@@ -142,6 +151,14 @@ export default {
                     [`${this.customCls}`]: !!this.customCls
                 }
             ];
+        },
+        previewAdd(){
+            return [
+                `${prefixCls}-preview-add`,
+                {
+                    [`${this.customAdd}`]: !!this.customAdd
+                }
+            ];
         }
     },
     watch: {
@@ -153,12 +170,17 @@ export default {
         }
     },
     methods: {
-        preview(index,src,e){
-
+        previewItem(index,src,e){
+            this.img = src;
+            this.cropperUpdate();
+            this.isCropping = true;
+            this.deleteIndex = index;
         },
         selectFile(e){
+            if(this.disabled){return;}
             let tagEl = e.target || e.srcElement;
             this.isCropping = true;
+            this.deleteIndex = false;
             let file = tagEl.files[0];
             let reader = new FileReader();
             reader.onload = (e) => {
@@ -174,35 +196,42 @@ export default {
             const {
                 cropperWidth,
                 cropperHeight,
-                cWidth: width,
-                cHeight: height,
                 img
             } = this;
             const options = {
                 cropperWidth,
-                cropperHeight,
-                width,
-                height,
+                cropperHeight: cropperHeight - 60,
                 img
             };
             if(!this.jc){
-                console.log(Object.assign({
-                    el: `#${this.uniqueCropperId}`,
-                },options));
                 this.jc = new JSCropper(Object.assign({
                     el: `#${this.uniqueCropperId}`,
                 },options));
             }else{
-                jc.update(options);
+                this.jc.update(options);
             }
 
         },
         resize(e){
-            this.cropperWidth = Math.max(rootEl.offsetWidth,rootEl.clientWidth);
-            this.cropperHeight = Math.max(rootEl.offsetHeight,rootEl.clientHeight);
+            this.cropperWidth = rootEl.clientWidth;
+            this.cropperHeight = rootEl.clientHeight;
+            this.cropperUpdate();
         },
-        cut(){},
-        cancel(){}
+        cut(){
+            const result = this.jc ? this.jc.cut() : null;
+            this.currentValue.push(result);
+            this.cancel();
+            this.$emit('on-cut',result);
+        },
+        cancel(){
+            this.isCropping = false;
+            this.$refs.file.value = '';
+        },
+        deleteItem(index){
+            const src = this.currentValue.splice(index,1);
+            this.cancel();
+            this.$emit('on-delete',src,index);
+        }
     },
     update(){
         this.$nextTick(() => {

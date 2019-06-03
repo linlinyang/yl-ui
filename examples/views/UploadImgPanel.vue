@@ -28,6 +28,7 @@
 import Header from '@/components/Header/';
 import Uploader from "#c/Uploader/";
 import img1 from '@/assets/pic1.jpg';
+import img2 from '@/assets/pic2.jpg';
 
 export default {
     name: 'UploadImgPanel',
@@ -37,7 +38,7 @@ export default {
     },
     data(){
         return {
-            imgs: [img1,img1,img1,img1,img1,img1,img1,img1,img1,img1]
+            imgs: [img1,img2]
         };
     }
 }
@@ -45,5 +46,17 @@ export default {
 
 <style lang="scss" scoped>
     
+    .list{
+        position: relative;
+
+        .row{
+            padding: 15px;
+            border-bottom: 1px solid #ccc;
+
+            &:last-child{
+                border-bottom: 0
+            }
+        }
+    }
 
 </style>
