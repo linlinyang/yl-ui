@@ -18,6 +18,13 @@
                     :value='imgs'
                 ></Uploader>
             </div>
+            <div class="row">
+                <label class="label">disabled</label>
+                <Uploader
+                    :value='imgs1'
+                    disabled
+                ></Uploader>
+            </div>
         </div>
     </div>
     
@@ -29,6 +36,9 @@ import Header from '@/components/Header/';
 import Uploader from "#c/Uploader/";
 import img1 from '@/assets/pic1.jpg';
 import img2 from '@/assets/pic2.jpg';
+import img3 from '@/assets/pic3.jpg';
+import img4 from '@/assets/pic4.jpg';
+import img5 from '@/assets/pic5.jpg';
 
 export default {
     name: 'UploadImgPanel',
@@ -38,7 +48,8 @@ export default {
     },
     data(){
         return {
-            imgs: [img1,img2]
+            imgs: [img1,img2,img5],
+            imgs1: [img1,img2,img3,img4,img5]
         };
     }
 }

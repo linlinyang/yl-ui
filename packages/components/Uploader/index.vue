@@ -19,7 +19,7 @@
             </div>
             <div 
                 :class='previewAdd'
-                v-if='currentValue.length <= max'
+                v-if='currentValue.length <= max && !disabled'
             >
                 <input 
                     type='file' 
@@ -39,7 +39,7 @@
                 <div @click="cut" v-if='!this.disabled'>
                     <slot name="cut">{{ cutTxt }}</slot>
                 </div>
-                <div @click="deleteItem(deleteIndex)" v-if='deleteIndex !== false || !this.disabled'>
+                <div @click="deleteItem(selectIndex)" v-if='selectIndex !== false && !this.disabled'>
                     <slot name="remove">{{ deleteTxt }}</slot>
                 </div>
                 <div @click="cancel">
@@ -126,7 +126,7 @@ export default {
             quality: 1,
             img: null,
             isCropping: false,
-            deleteIndex: false,
+            selectIndex: false,
             uniqueCropperId: `cropper-wrap-${now.substr(0,4)}-${++uid}`
         };
     },
@@ -154,6 +154,7 @@ export default {
         },
         previewAdd(){
             return [
+                `${prefixCls}-preview-item`,
                 `${prefixCls}-preview-add`,
                 {
                     [`${this.customAdd}`]: !!this.customAdd
@@ -174,13 +175,13 @@ export default {
             this.img = src;
             this.cropperUpdate();
             this.isCropping = true;
-            this.deleteIndex = index;
+            this.selectIndex = index;
         },
         selectFile(e){
             if(this.disabled){return;}
             let tagEl = e.target || e.srcElement;
             this.isCropping = true;
-            this.deleteIndex = false;
+            this.selectIndex = false;
             let file = tagEl.files[0];
             let reader = new FileReader();
             reader.onload = (e) => {
@@ -219,13 +220,13 @@ export default {
         },
         cut(){
             const result = this.jc ? this.jc.cut() : null;
-            this.currentValue.push(result);
+            this.selectIndex === false ?  this.currentValue.push(result) : this.currentValue.splice(this.selectIndex,1,result);
             this.cancel();
             this.$emit('on-cut',result);
         },
         cancel(){
             this.isCropping = false;
-            this.$refs.file.value = '';
+            this.$refs.file && (this.$refs.file.value = '');
         },
         deleteItem(index){
             const src = this.currentValue.splice(index,1);

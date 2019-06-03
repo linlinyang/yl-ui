@@ -22,23 +22,16 @@ $addBorderColor: #a3a3a3;
             margin: $defaultGap $defaultGap 0 0;
             cursor: pointer;
             background-color: $backColor;
+            position: relative;
+            z-index: 1;
 
             img{
                 width: 100%;
                 vertical-align: middle;
             }
-
         }
 
         &-add{
-            position: relative;
-            display: inline-block;
-            @include size($defaultWidth,$defaultHeight);
-            margin: $defaultGap $defaultGap 0 0;
-            cursor: pointer;
-            z-index: 1;
-            background-color: $backColor;
-
             input{
                 @include size(100%,100%);
                 display: block;
@@ -105,9 +98,13 @@ $addBorderColor: #a3a3a3;
 
 @media screen and (max-width: 750px){
     #{$prefixCls}-preview{
-        &-item,&-add{
-            @include size(46%,150px,150px);
-            margin: $defaultGap 4% 0 0;
+        &-item{
+            @include size(48%,150px,150px);
+            margin-right: 4%;
+
+            &:nth-child(2n){
+                margin-right: 0;
+            }
         }
     }
 }
