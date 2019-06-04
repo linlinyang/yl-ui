@@ -82,6 +82,9 @@ export default {
 			},{
 				name: 'UploadImg',
 				link: '#/UploadImg'
+			},{
+				name: 'Select',
+				link: '#/Select'
 			}],
 			handleList: [{
 				name: 'Tooltip',

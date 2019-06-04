@@ -9,6 +9,7 @@ import CheckboxPanel from './views/CheckboxPanel'
 import SliderPanel from './views/SliderPanel'
 import TooltipPanel from './views/TooltipPanel'
 import UploadImgPanel from './views/UploadImgPanel'
+import SelectPanel from './views/SelectPanel'
 
 Vue.use(Router)
 export default new Router({
@@ -48,5 +49,9 @@ export default new Router({
 		path: '/UploadImg',
 		name: 'UploadImgPanel',
 		component: UploadImgPanel
+	},{
+		path: '/Select',
+		name: 'SelectPanel',
+		component: SelectPanel
 	}]
 })

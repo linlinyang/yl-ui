@@ -1,0 +1,9 @@
+$prefixCls: '.yl-ui-select';
+
+#{$prefixCls}{
+    display: inline-block;
+    width: 100%;
+    vertical-align: center;
+    @include fcw(14px,#515a6e);
+    line-height: 1;
+}
