@@ -6,7 +6,9 @@
 
         <input type="hidden" :name="name" :value="currentValue">
         
-        
+        <div :class="prefixCls + '-dropdown-list'">
+            <slot></slot>
+        </div>
     </div>
 </template>
 

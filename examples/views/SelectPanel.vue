@@ -15,7 +15,12 @@
             <div class="row">
                 <Select
                     value='aa'
-                ></Select>
+                >
+                    <Icon type='correct'></Icon>
+                    <Icon type='correct'></Icon>
+                    <Icon type='correct'></Icon>
+                    <Icon type='correct'></Icon>
+                </Select>
             </div>
         </div>
     </div>
@@ -26,12 +31,14 @@
 <script>
 import Header from '@/components/Header/';
 import Select from '#c/Select/';
+import Icon from '#c/Icon';
 
 export default {
     name: 'UploadImgPanel',
     components: {
         Header,
-        Select
+        Select,
+        Icon
     },
     data(){
         return {
