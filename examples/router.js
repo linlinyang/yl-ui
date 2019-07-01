@@ -10,6 +10,7 @@ import SliderPanel from './views/SliderPanel'
 import TooltipPanel from './views/TooltipPanel'
 import UploadImgPanel from './views/UploadImgPanel'
 import SelectPanel from './views/SelectPanel'
+import ActionSheet from './views/ActionSheet'
 
 Vue.use(Router)
 export default new Router({
@@ -53,5 +54,9 @@ export default new Router({
 		path: '/Select',
 		name: 'SelectPanel',
 		component: SelectPanel
+	},{
+		path: '/actionSheet',
+		name: 'ActionSheet',
+		component: ActionSheet
 	}]
 })

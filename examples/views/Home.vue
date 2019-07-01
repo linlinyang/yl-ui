@@ -89,6 +89,9 @@ export default {
 			handleList: [{
 				name: 'Tooltip',
 				link: '#/Tooltip'
+			},{
+				name: 'ActionSheet',
+				link: '#/actionSheet'
 			}]
 		};
   	}
