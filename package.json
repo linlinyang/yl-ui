@@ -15,7 +15,7 @@
     "@vue/cli-plugin-babel": "^3.8.0",
     "@vue/cli-service": "^3.8.0",
     "@yanglinlin/js_cropper": "^1.1.3",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "popper.js": "^1.15.0",
     "sass-loader": "^7.1.0",
     "style-resources-loader": "^1.2.1",
